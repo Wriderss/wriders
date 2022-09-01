@@ -9,7 +9,7 @@ import DropDownProfile from "./DropDownProfile";
 
 const Header = () => {
   return (
-    <header className="flex items-center space-x-[3rem] w-full p-4 px-[2rem] justify-between">
+    <header className="flex items-center space-x-[3rem] w-[95%] mx-auto p-4 px-[2rem] justify-between">
       <div>
         <h4 className="font-bold text-3xl ">
           Welcome,

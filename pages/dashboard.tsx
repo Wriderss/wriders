@@ -12,10 +12,14 @@ import Header from "../components/Header";
 import Authors from "../components/Authors";
 import PersonalisedBlog from "../components/PersonalisedBlog";
 import OtherBlog from "../components/OtherBlog";
+import Head from "next/head";
 
 const Dashboard = () => {
   return (
     <main className="flex">
+      <Head>
+        <title>Wrider | Dashboard</title>
+      </Head>
       {/* Sidebar */}
       <div className="flex fixed top-0 left-0  flex-col justify-between p-4 h-screen md:w-max :w-[10vw] bg-secondary-color">
         <div className="flex-1 flex flex-col items-center space-y-[1rem] mt-4">

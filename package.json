@@ -8,9 +8,11 @@
   "dependencies": {
     "@faker-js/faker": "^7.5.0",
     "@heroicons/react": "^2.0.10",
+    "@reduxjs/toolkit": "^1.8.5",
     "next": "latest",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "react-redux": "^8.0.2"
   },
   "devDependencies": {
     "@types/node": "17.0.35",
