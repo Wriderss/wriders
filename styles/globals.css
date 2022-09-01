@@ -19,3 +19,11 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+.menu-item {
+  @apply hover:bg-primary-color hover:text-secondary-color transition-all   ease-in cursor-pointer hover:rounded-3xl rounded-xl p-2;
+}
+
+.active-tab {
+  @apply bg-secondary-color font-bold text-white rounded-md;
+}
