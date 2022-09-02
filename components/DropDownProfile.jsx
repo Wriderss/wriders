@@ -16,7 +16,7 @@ const DropDownProfile = () => {
         data-dropdown-toggle="userDropdown"
         data-dropdown-placement="bottom-start"
         class="h-[30px] w-[30px]  rounded-full cursor-pointer"
-        src="https://avatars.dicebear.com/api/human/user.svg"
+        src="/user.jpg"
         alt="User dropdown"
       />
 

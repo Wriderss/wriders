@@ -14,6 +14,9 @@ module.exports = {
         "primary-color": "var(--primary-color)",
         "secondary-color": "var(--secondary-color)",
       },
+      backgroundImage: {
+        "profile-background": "url('/background-profile.jpg')",
+      },
     },
   },
   plugins: [],
