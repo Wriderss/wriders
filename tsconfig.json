@@ -21,7 +21,8 @@
     "**/*.tsx",
     "components/YourArticle.jsx",
     "components/YourArticle.jsx",
-    "components/PersonalisedBlog.jsx"
+    "components/PersonalisedBlog.jsx",
+    "pages/writtingpage.jsx"
   ],
   "exclude": ["node_modules"]
 }
