@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { faker } from "@faker-js/faker";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Blog from "./Blog";
 
 const BlogSection = ({ title }) => {

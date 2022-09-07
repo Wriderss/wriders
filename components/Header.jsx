@@ -5,7 +5,7 @@ import {
   MoonIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
-import DropDownProfile from "./DropDownProfile";
+import DropDownProfile from "./Profile/DropDownProfile";
 
 const Header = ({ title }) => {
   return (

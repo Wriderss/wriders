@@ -2,9 +2,9 @@ import Head from "next/head";
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import ProfileBar from "../components/ProfileBar";
-import YourArticle from "../components/YourArticle";
-import SavedArticle from "../components/SavedArticle";
+import ProfileBar from "../components/Profile/ProfileBar";
+import YourArticle from "../components/Blog/YourArticle";
+import SavedArticle from "../components/Blog/SavedArticle";
 
 const profile = () => {
   return (
