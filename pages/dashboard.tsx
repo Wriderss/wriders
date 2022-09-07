@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../components/Header";
 import Authors from "../components/Authors";
-import PersonalisedBlog from "../components/PersonalisedBlog";
 import OtherBlog from "../components/OtherBlog";
 import Head from "next/head";
 import Sidebar from "../components/Sidebar";
+import BlogSection from "../components/BlogSection";
 
 const Dashboard = () => {
   return (
@@ -16,9 +16,11 @@ const Dashboard = () => {
       <Sidebar />
       {/* Main-content */}
       <div className="flex-1 md:ml-[50px] ml-[12vw] md:w-full w-[90vw] overflow-y-hidden">
-        <Header />
+        <Header title="Home" />
         <Authors />
-        <PersonalisedBlog />
+        <BlogSection title={"Top 10 Articles"} />
+        <BlogSection title={"Recommended for you"} />
+        <BlogSection title={"Latest Article"} />
         <OtherBlog />
       </div>
     </main>

@@ -7,21 +7,21 @@ import Sidebar from "../components/Sidebar";
 
 const writtingpage = () => {
   const [ArticleHeading, SetArticleHeading] = useState("");
-  const ImagePickerRef = useRef(null);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const ImagePickerRef = useRef<HTMLInputElement>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [ArticleBody, SetArticleBody] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
-  const addImageToBlog = (e) => {
+  const addImageToBlog = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
-    if (e.target.files[0]) {
+    if (e.target.files?.[0]) {
       reader.readAsDataURL(e.target.files[0]);
     }
     reader.onload = (readerEvent) => {
-      setSelectedImage(readerEvent.target.result);
+      setSelectedImage(readerEvent.target?.result as string);
     };
   };
-  const addTags = (e) => {
+  const addTags = (e: any) => {
     if (e.key !== "Enter") return;
     const value = e.target.value;
     if (!value.trim()) return;
@@ -30,7 +30,7 @@ const writtingpage = () => {
     setTags([...tags, value]);
     setTagInput("");
   };
-  const removeTag = (index) => {
+  const removeTag = (index: any) => {
     setTags(tags.filter((element, i) => i !== index));
   };
   return (
@@ -40,7 +40,7 @@ const writtingpage = () => {
       </Head>
       <Sidebar />
       <div className="flex-1 md:ml-[50px] ml-[12vw] md:w-full w-[90vw] overflow-y-hidden">
-        <Header />
+        <Header title={"Blog"} />
         <div className="ml-[4rem] w-[90%] mx-auto border-2 border-gray-200  my-2">
           <div className="p-4">
             <div className="flex justify-between items-center space-x-2">
@@ -65,7 +65,7 @@ const writtingpage = () => {
             ) : (
               <div
                 className="bg-gray-300 w-full h-[400px] my-2 flex flex-col space-y-4 cursor-pointer justify-center items-center"
-                onClick={() => ImagePickerRef.current.click()}
+                onClick={() => ImagePickerRef.current?.click()}
               >
                 <img
                   src={"/image-gallery-dark.png"}

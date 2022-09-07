@@ -7,14 +7,11 @@ import {
 } from "@heroicons/react/24/solid";
 import DropDownProfile from "./DropDownProfile";
 
-const Header = () => {
+const Header = ({ title }) => {
   return (
     <header className="flex items-center space-x-[3rem] w-[95%] mx-auto p-4 px-[2rem] justify-between">
       <div>
-        <h4 className="font-bold text-3xl ">
-          Welcome,
-          <span className="capitalize">John ⚡</span>
-        </h4>
+        <h4 className="font-semibold text-3xl ">{title}</h4>
       </div>
       <div className="flex flex-1 mx-[2rem]  space-x-3">
         <div className="hidden lg:flex flex-1 items-center space-x-2 bg-gray-200 rounded-md px-4 py-1 shadow-md">

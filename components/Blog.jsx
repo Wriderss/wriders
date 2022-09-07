@@ -3,27 +3,25 @@ import {
   BookmarkIcon,
   EllipsisHorizontalCircleIcon,
 } from "@heroicons/react/24/solid";
-const Blog = ({ username, avatar, body, heading, tag, image }) => {
+import Image from "next/image";
+import { HeartIcon } from "@heroicons/react/24/outline";
+const Blog = ({ username, avatar, heading, image }) => {
   return (
-    <div className="flex cursor-default flex-col items-center  h-max  justify-center ">
-      <img src={image} alt={heading} className="rounded-md object-contain" />
-      <div className="flex flex-col space-y-4">
-        <span className="bg-gray-300 cursor-pointer w-max rounded-md p-2 text-[12px] mt-2 ">
-          {tag}
-        </span>
-        <div>
-          <h4 className="font-semibold text-xl uppercase">{heading}</h4>
-          <p className="text-[12px]">{body}</p>
+    <div className="flex flex-col  bg-white py-2 shadow-lg rounded-md">
+      <div className="px-2">
+        <h1 className="capitalize  text-lg">{heading}</h1>
+      </div>
+      <div>
+        <img src={image} alt={heading} />
+      </div>
+      <div className="flex justify-between items-center p-1">
+        <div className="flex items-center space-x-2">
+          <img src={avatar} alt={username} className="h-8 w-8  rounded-full" />
+          <p className="text-[13px]">{username}</p>
         </div>
-        <div className="flex justify-between">
-          <div className="flex items-center space-x-2">
-            <img src={avatar} alt={username} className="h-7 w-7 rounded-full" />
-            <p>{username}</p>
-          </div>
-          <div className="flex space-x-2">
-            <BookmarkIcon className="h-[40px] cursor-pointer w-[40px] hover:bg-secondary-color hover:text-white p-2 rounded-full" />
-            <EllipsisHorizontalCircleIcon className="h-[40px] cursor-pointer w-[40px] hover:bg-secondary-color hover:text-white p-2 rounded-full" />
-          </div>
+        <div className="flex items-center space-x-2">
+          <span>10.5k</span>
+          <HeartIcon height={20} width={20} />
         </div>
       </div>
     </div>
