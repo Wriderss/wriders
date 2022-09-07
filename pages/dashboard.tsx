@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../components/Header";
-import Authors from "../components/Authors";
-import OtherBlog from "../components/OtherBlog";
+import Authors from "../components/Author/Authors";
+import OtherBlog from "../components/Blog/OtherBlog";
 import Head from "next/head";
 import Sidebar from "../components/Sidebar";
-import BlogSection from "../components/BlogSection";
+import BlogSection from "../components/Blog/BlogSection";
 
 const Dashboard = () => {
   return (

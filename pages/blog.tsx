@@ -1,10 +1,10 @@
 import React from "react";
 import Head from "next/head";
 import Sidebar from "../components/Sidebar";
-import BlogHeader from "../components/BlogHeader";
+import BlogHeader from "../components/Blog/BlogHeader";
 import Header from "../components/Header";
-import MainBlog from "../components/MainBlog";
-import CommentSection from "../components/CommentSection";
+import MainBlog from "../components/Blog/MainBlog";
+import CommentSection from "../components/comments/CommentSection";
 
 const blog = () => {
   return (
