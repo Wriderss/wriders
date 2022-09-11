@@ -1,0 +1,50 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  email      String    @unique @db.VarChar(255)
+  post       Post[]
+  Comment    Comment[]
+  created_At DateTime  @default(now()) @db.Timestamp(6)
+}
+
+model Post {
+  id         Int       @id @default(autoincrement())
+  created_At DateTime  @default(now()) @db.Timestamp(6)
+  slug       String    @unique @db.VarChar(255)
+  title      String    @db.VarChar(255)
+  body       String
+  image_link String
+  comment    Comment[]
+  tags       tags[]
+  author     User      @relation(fields: [authorId], references: [id])
+  authorId   Int
+}
+
+model Comment {
+  id                Int      @id @default(autoincrement())
+  created_At        DateTime @default(now()) @db.Timestamp(6)
+  comment_body      String
+  comment_author    User     @relation(fields: [comment_authorId], references: [id])
+  comment_authorId  Int
+  comment_on_post   Post     @relation(fields: [comment_on_postId], references: [id])
+  comment_on_postId Int
+}
+
+model tags {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(255)
+  created_At DateTime @default(now()) @db.Timestamp(6)
+  Post       Post?    @relation(fields: [postId], references: [id])
+  postId     Int?
+}
