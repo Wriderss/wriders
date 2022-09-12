@@ -47,7 +47,7 @@ async function addBlog(req: NextApiRequest, res: NextApiResponse) {
         slug,
         title,
         body,
-        image: image,
+        image,
         authorId,
       },
     })
