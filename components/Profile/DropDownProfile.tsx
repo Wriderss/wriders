@@ -12,7 +12,6 @@ const DropDownProfile = () => {
       <img
         id="avatarButton"
         onClick={() => setShow(!show)}
-        type="button"
         data-dropdown-toggle="userDropdown"
         data-dropdown-placement="bottom-start"
         className="h-[30px] w-[30px]  rounded-full cursor-pointer"
@@ -56,7 +55,6 @@ const DropDownProfile = () => {
         <div className="py-1">
           <a
             href="/"
-            onClick={() => signOut(auth)}
             className="flex items-center space-x-2 py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
           >
             <ArrowRightOnRectangleIcon className="h-5 w-5" />

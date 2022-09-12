@@ -4,10 +4,22 @@ import { faker } from "@faker-js/faker";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Blog from "./Blog";
 
-const BlogSection = ({ title }) => {
+type blog_title = {
+  title: string;
+};
+
+type blog_type = {
+  userName: string;
+  avatar: string;
+  heading: string;
+  image: string;
+  id: number;
+};
+
+const BlogSection = ({ title }: blog_title) => {
   const dispatch = useAppDispatch();
   const tabState = useAppSelector((state) => state.tab.tabName);
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState<blog_type[]>([]);
   useEffect(() => {
     const blogs = [...Array(4)].map((_, i) => ({
       userName: faker.internet.userName(),

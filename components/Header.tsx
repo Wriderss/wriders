@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 import DropDownProfile from "./Profile/DropDownProfile";
 
-const Header = ({ title }) => {
+const Header = ({ title }: any) => {
   return (
     <header className="flex items-center space-x-[3rem] w-[95%] mx-auto p-4 px-[2rem] justify-between">
       <div>
@@ -37,7 +37,7 @@ const Header = ({ title }) => {
           height={40}
           width={40}
         />
-        <DropDownProfile className="hidden md:inline-flex" />
+        <DropDownProfile />
       </div>
     </header>
   );

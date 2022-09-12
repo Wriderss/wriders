@@ -2,8 +2,20 @@ import React, { useEffect, useState } from "react";
 import { faker } from "@faker-js/faker";
 import Story from "../Profile/Story";
 
+type profile_type = {
+  id: any;
+  avatar: string;
+  userName: string;
+};
+
+type story_type = {
+  userName: string;
+  avatar: string;
+  id: any;
+};
+
 const Authors = () => {
-  const [stories, setStories] = useState([]);
+  const [stories, setStories] = useState<story_type[]>([]);
   useEffect(() => {
     const stories = [...Array(20)].map((_, i) => ({
       userName: faker.internet.userName(),
@@ -18,7 +30,7 @@ const Authors = () => {
       <h4 className="font-semibold text-xl">Shorts</h4>
       <div className="flex space-x-4 no-scrollbar p-6 bg-white mt-2 border-gray-200 border rounded-sm overflow-x-scroll scrollbar-thin scrollbar-thumb-black">
         <Story img={"/user.jpg"} username="You" />
-        {stories.map((profile) => (
+        {stories.map((profile: profile_type) => (
           <Story
             key={profile.id}
             img={profile?.avatar}

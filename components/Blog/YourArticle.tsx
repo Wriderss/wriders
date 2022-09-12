@@ -2,8 +2,15 @@ import { faker } from "@faker-js/faker";
 import { useState, useEffect } from "react";
 import YourBlog from "./YourBlog";
 
+type blog_type = {
+  heading: string;
+  image: string;
+  views: number;
+  id: number;
+};
+
 const YourArticle = () => {
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState<blog_type[]>([]);
   useEffect(() => {
     const blogs = [...Array(3)].map((_, i) => ({
       heading: faker.random.word(),

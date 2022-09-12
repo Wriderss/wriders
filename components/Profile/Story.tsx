@@ -1,4 +1,8 @@
-const Story = ({ username, img }) => {
+type story_type = {
+  username: string;
+  img: string;
+};
+const Story = ({ username, img }: story_type) => {
   return (
     <div>
       <img

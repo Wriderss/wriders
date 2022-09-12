@@ -5,7 +5,15 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { HeartIcon } from "@heroicons/react/24/outline";
-const Blog = ({ username, avatar, heading, image }) => {
+
+type blog_type = {
+  username: string;
+  avatar: string;
+  heading: string;
+  image: string;
+};
+
+const Blog = ({ username, avatar, heading, image }: blog_type) => {
   return (
     <div className="flex flex-col  bg-white py-2 shadow-lg rounded-md">
       <div className="px-2">
