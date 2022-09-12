@@ -20,12 +20,11 @@ async function addUser(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
 ) {
-  const { email, password, name } = req.body;
+  const { email, name } = req.body;
   await prisma.user
     .create({
       data: {
         email,
-        password,
         name,
       },
     })

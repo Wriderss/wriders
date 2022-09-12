@@ -2,11 +2,27 @@ import React, { useState } from "react";
 import { UserIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Head from "next/head";
-
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
+import auth from "../lib/firebase";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const handleLogin = async () => {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        alert("user is logged in");
+        console.log(user.user.displayName);
+        setEmail("");
+        setPassword("");
+      })
+      .catch((e) => {
+        alert(e.message);
+        console.log(e);
+      });
+  };
   return (
     <div>
       <Head>
@@ -66,31 +82,39 @@ const Login = () => {
                     />
                   </div>
                 </div>
-                <p className="text-[#171717] text-[15px] text-right cursor-pointer hover:underline">
+                <p
+                  onClick={() => {
+                    if (email === "") {
+                      alert("Email is required.");
+                    } else {
+                      sendPasswordResetEmail(auth, email)
+                        .then(() => {
+                          alert(`Email sent to ${email}`);
+                          setEmail("");
+                        })
+                        .catch((e) => {
+                          console.log(e.message);
+                        });
+                    }
+                  }}
+                  className="text-[#171717] text-[15px] text-right cursor-pointer hover:underline"
+                >
                   Forget Password?
                 </p>
-                <button className="bg-secondary-color cursor-pointer text-white px-[4rem] text-lg py-2 text-center mx-auto rounded-md w-max">
+                <button
+                  onClick={(e) => {
+                    if (email === "" || password === "") {
+                      e.preventDefault();
+                      alert("All fields are required.");
+                    } else {
+                      e.preventDefault();
+                      handleLogin();
+                    }
+                  }}
+                  className="bg-secondary-color cursor-pointer text-white px-[4rem] text-lg py-2 text-center mx-auto rounded-md w-max"
+                >
                   Login
                 </button>
-                <div className="flex items-center space-x-2 my-2 w-[60%] mx-auto">
-                  <div className="h-[1px] w-[40%] bg-black" />
-                  <span className="text-secondary-color uppercase font-semibold ">
-                    or
-                  </span>
-                  <div className="h-[1px] w-[40%] bg-black" />
-                </div>
-                <div className="flex space-x-[2rem] mx-auto justify-center w-[55%] my-4 items-center">
-                  <img
-                    src="/google.svg"
-                    alt="google"
-                    className="p-2 rounded-md bg-white h-[40px] w-[40px] object-contain cursor-pointer"
-                  />
-                  <img
-                    src="/twitter.svg"
-                    alt="twitter"
-                    className="p-2 rounded-md bg-white h-[40px] w-[40px] object-contain cursor-pointer"
-                  />
-                </div>
                 <div className="flex justify-center">
                   <p className="text-[#868686]">
                     You don't have an account?{" "}
