@@ -6,21 +6,22 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import auth from "../lib/firebase";
+import { auth } from "../lib/firebase";
+import toast, { Toaster } from "react-hot-toast";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = async () => {
     await signInWithEmailAndPassword(auth, email, password)
-      .then((user) => {
-        alert("user is logged in");
-        console.log(user.user.displayName);
+      .then(async (user) => {
+        toast.success("Login Successful");
         setEmail("");
         setPassword("");
       })
       .catch((e) => {
-        alert(e.message);
-        console.log(e);
+        console.log(e.message);
+        toast.error("Something went wrong");
       });
   };
   return (
@@ -29,6 +30,7 @@ const Login = () => {
         <title>Wrider | Login</title>
       </Head>
       <main className="flex w-screen h-screen ">
+        <Toaster />
         <div className="flex-1 bg-primary-color flex flex-col items-center pt-[6rem]">
           <div className="mt-[2rem] text-left w-[80%] flex flex-col justify-center mx-auto">
             <div className="flex flex-col space-y-2 w-[70%] justify-center mx-auto">

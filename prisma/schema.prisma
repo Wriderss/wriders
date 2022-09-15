@@ -10,7 +10,7 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
+  id           String    @id @default(cuid())
   name         String    @db.VarChar(255)
   email        String    @unique @db.VarChar(255)
   bio          String?
@@ -25,50 +25,50 @@ model User {
 
 model Follows {
   follower    User     @relation("follower", fields: [followerId], references: [id])
-  followerId  Int
+  followerId  String
   following   User     @relation("following", fields: [followingId], references: [id])
-  followingId Int
+  followingId String
   createdAt   DateTime @default(now())
 
   @@id([followerId, followingId])
 }
 
 model Blog {
-  id         Int       @id @default(autoincrement())
+  id         String    @id @default(cuid())
   created_at DateTime  @default(now())
   slug       String    @unique @db.VarChar(255)
   title      String    @db.VarChar(255)
   body       String
-  image      String
+  image      String?   @db.Text
   comment    Comment[]
   tags       Tags[]
   likes      Like[]
   author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId   Int
+  authorId   String
 }
 
 model Tags {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(cuid())
   name       String   @unique @db.VarChar(255)
   created_at DateTime @default(now())
   blog       Blog[]
 }
 
 model Comment {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(cuid())
   created_at DateTime @default(now())
   body       String
   author     User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  authorId   Int
+  authorId   String
   blog       Blog     @relation(fields: [blogId], references: [id], onDelete: Cascade)
-  blogId     Int
+  blogId     String
 }
 
 model Like {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(cuid())
   created_at DateTime @default(now())
   blog       Blog     @relation(references: [id], fields: [blogId], onDelete: Cascade)
-  blogId     Int
+  blogId     String
   user       User     @relation(references: [id], fields: [userId], onDelete: Cascade)
-  userId     Int
+  userId     String
 }

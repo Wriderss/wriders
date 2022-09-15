@@ -2,14 +2,6 @@ import { prisma } from "../../prisma/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import { ResponseType } from "../../interfaces";
 
-type request_type = {
-  slug: string;
-  title: string;
-  body: string;
-  image: string;
-  authorId: number;
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseType>
@@ -40,7 +32,8 @@ async function getAllBlogs(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function addBlog(req: NextApiRequest, res: NextApiResponse) {
-  const { slug, title, body, image, authorId }: request_type = req.body;
+  const { slug, title, body, image, authorId } = req.body;
+
   await prisma.blog
     .create({
       data: {

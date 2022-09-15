@@ -4,14 +4,22 @@ import Image from "next/image";
 import React, { useRef, useState } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { auth, storage } from "../lib/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import toast, { Toaster } from "react-hot-toast";
 
 const writtingpage = () => {
+  const [user] = useAuthState(auth);
   const [ArticleHeading, SetArticleHeading] = useState("");
   const ImagePickerRef = useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [ArticleBody, SetArticleBody] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
+  const slug = ArticleHeading.replaceAll(" ", "-");
+  const [loading, setLoading] = useState<boolean>(false);
+
   const addImageToBlog = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     if (e.target.files?.[0]) {
@@ -26,21 +34,61 @@ const writtingpage = () => {
     const value = e.target.value;
     if (!value.trim()) return;
     if (tags.length >= 5) return;
-
     setTags([...tags, value]);
     setTagInput("");
   };
   const removeTag = (index: any) => {
     setTags(tags.filter((element, i) => i !== index));
   };
+  const handleBlogSubmit = async () => {
+    if (loading) return;
+    setLoading(true);
+    const email = user?.email;
+    const imageRef = ref(storage, `blogs/${slug}/image`);
+    await uploadString(imageRef, String(selectedImage), "data_url").then(
+      async () => {
+        const responseEmail = await fetch("/api/userId", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        });
+        const { data } = await responseEmail.json();
+        const downloadUrl = await getDownloadURL(imageRef);
+        const response = await fetch("/api/blogs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            slug,
+            title: ArticleHeading,
+            body: ArticleBody.replaceAll("\n", "<br />"),
+            image: downloadUrl,
+            authorId: data.id,
+          }),
+        });
+        console.log(response.json());
+        setLoading(false);
+        SetArticleBody("");
+        SetArticleHeading("");
+        setSelectedImage(null);
+        toast.success("Blog is Created", { icon: "✅" });
+      }
+    );
+  };
   return (
     <div className="flex">
       <Head>
         <title>Wrider | Writting page</title>
       </Head>
+
       <Sidebar />
       <div className="flex-1 md:ml-[50px] ml-[12vw] md:w-full w-[90vw] overflow-y-hidden">
+        <Toaster />
         <Header title={"Blog"} />
+
         <div className="ml-[4rem] w-[90%] mx-auto border-2 border-gray-200  my-2">
           <div className="p-4">
             <div className="flex justify-between items-center space-x-2">
@@ -50,8 +98,15 @@ const writtingpage = () => {
                 ref={ImagePickerRef}
                 onChange={(e) => addImageToBlog(e)}
               />
-              <span className="">Draft in John Doe.</span>
-              <button className="bg-secondary-color text-white text-[14px] py-2 px-4 rounded-sm">
+              {loading ? (
+                <span className="font-bold text-xl">Publishing 🚀</span>
+              ) : (
+                <span className="font-bold text-xl">{ArticleHeading}</span>
+              )}
+              <button
+                onClick={handleBlogSubmit}
+                className="bg-secondary-color text-white text-[14px] py-2 px-4 rounded-sm"
+              >
                 Publish
               </button>
             </div>

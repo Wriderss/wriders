@@ -3,8 +3,9 @@ import { UserIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Head from "next/head";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import auth from "../lib/firebase";
+import { auth } from "../lib/firebase";
 import { ResponseType } from "../interfaces";
+import toast, { Toaster } from "react-hot-toast";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -15,6 +16,7 @@ const Register = () => {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((user) => {
         updateProfile(user.user, { displayName: username });
+        toast.success("Account Created");
       })
       .catch((e) => {
         alert(e.message);
@@ -37,6 +39,7 @@ const Register = () => {
         <title>Wrider | Register Account</title>
       </Head>
       <main className="flex w-screen h-screen ">
+        <Toaster />
         <div className="flex-1 bg-primary-color flex flex-col items-center pt-[6rem]">
           <div className="mt-[2rem] text-left w-[80%] flex flex-col justify-center mx-auto">
             <div className="flex flex-col space-y-2 w-[70%] justify-center mx-auto">

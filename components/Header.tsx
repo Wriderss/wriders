@@ -6,8 +6,10 @@ import {
   PencilIcon,
 } from "@heroicons/react/24/solid";
 import DropDownProfile from "./Profile/DropDownProfile";
+import { useRouter } from "next/router";
 
 const Header = ({ title }: any) => {
+  const router = useRouter();
   return (
     <header className="flex items-center space-x-[3rem] w-[95%] mx-auto p-4 px-[2rem] justify-between">
       <div>
@@ -22,7 +24,10 @@ const Header = ({ title }: any) => {
             placeholder="Search Articles"
           />
         </div>
-        <button className="bg-secondary-color text-white p-2 rounded-md  ">
+        <button
+          onClick={() => router.push("/writtingpage")}
+          className="bg-secondary-color text-white p-2 rounded-md  "
+        >
           <PencilIcon height={20} width={20} />
         </button>
       </div>
