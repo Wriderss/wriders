@@ -1,36 +1,38 @@
 import { faker } from "@faker-js/faker";
 import { useState, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../lib/firebase";
 import YourBlog from "./YourBlog";
 
-type blog_type = {
-  heading: string;
-  image: string;
-  views: number;
-  id: number;
-};
-
 const YourArticle = () => {
-  const [blogs, setBlogs] = useState<blog_type[]>([]);
-  useEffect(() => {
-    const blogs = [...Array(3)].map((_, i) => ({
-      heading: faker.random.word(),
-      image: faker.image.image(),
-      views: faker.datatype.number(1000),
-      id: i,
-    }));
+  const [user] = useAuthState(auth);
+  const email = user?.email;
+  const [userDetails, setUserDetails] = useState<string[]>([]);
+  const getUserDetails = async () => {
+    const resp = await fetch("/api/userDetails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email }),
+    });
 
-    setBlogs(blogs);
-  }, []);
+    const userDetails = await resp.json();
+    setUserDetails(userDetails);
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, [user]);
   return (
     <div className="my-4">
-      <h1 className="font-semibold text-xl">Your Article</h1>
-      <div className="flex  space-x-[2rem] my-2 items-center">
-        {blogs.map((blog) => (
+      <h1 className="font-semibold text-3xl my-4">Your Article</h1>
+      <div className="flex flex-wrap gap-4  items-center">
+        {userDetails?.blog?.map((blog: any) => (
           <YourBlog
-            heading={blog.heading}
+            heading={blog.title}
             image={blog.image}
-            views={blog.views}
-            key={blog.id}
+            likes={blog.numberOfLikes}
           />
         ))}
       </div>

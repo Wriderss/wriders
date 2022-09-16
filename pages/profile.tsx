@@ -19,7 +19,6 @@ const profile = () => {
         <div className="ml-[4rem] w-[90%] mx-auto">
           <ProfileBar />
           <YourArticle />
-          <SavedArticle />
         </div>
       </div>
     </div>

@@ -69,7 +69,7 @@ const writtingpage = () => {
             authorId: data.id,
           }),
         });
-        console.log(response.json());
+
         setLoading(false);
         SetArticleBody("");
         SetArticleHeading("");
