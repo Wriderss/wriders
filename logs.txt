@@ -1,0 +1,11 @@
+#Untouched task - 
+Tags need to be added in the blogs as well as relatively.
+
+#Today's goal - 
+1. Add blogs from front-end to back-end
+2. Get All the blogs up to the front-end.
+
+
+#Goals for tommorow - 
+1. user can update thier profile photo and profile bio.
+2. users articles can come upto the front-end .

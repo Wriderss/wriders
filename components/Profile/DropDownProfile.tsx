@@ -3,7 +3,9 @@ import {
   Cog8ToothIcon,
   CurrencyDollarIcon,
 } from "@heroicons/react/24/solid";
+import { signOut } from "firebase/auth";
 import React, { useState } from "react";
+import { auth } from "../../lib/firebase";
 
 const DropDownProfile = () => {
   const [show, setShow] = useState(false);
@@ -54,6 +56,9 @@ const DropDownProfile = () => {
         </ul>
         <div className="py-1">
           <a
+            onClick={() => {
+              signOut(auth);
+            }}
             href="/"
             className="flex items-center space-x-2 py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
           >

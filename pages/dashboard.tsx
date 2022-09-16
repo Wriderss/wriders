@@ -5,8 +5,15 @@ import OtherBlog from "../components/Blog/OtherBlog";
 import Head from "next/head";
 import Sidebar from "../components/Sidebar";
 import BlogSection from "../components/Blog/BlogSection";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../lib/firebase";
+import Login from "./login";
 
 const Dashboard = () => {
+  const [user] = useAuthState(auth);
+  if (!user) {
+    return <Login />;
+  }
   return (
     <main className="flex">
       <Head>
