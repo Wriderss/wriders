@@ -8,6 +8,8 @@ type blogType = {
   title: string;
   image: string;
   numberOfLikes: number;
+  slug: string;
+  likes: any;
 };
 
 const YourArticle = () => {
@@ -35,11 +37,7 @@ const YourArticle = () => {
       <h1 className="font-semibold text-3xl my-4">Your Article</h1>
       <div className="flex flex-wrap gap-4  items-center">
         {userDetails.map((blog) => (
-          <YourBlog
-            heading={blog.title}
-            image={blog.image}
-            likes={blog.numberOfLikes}
-          />
+          <YourBlog heading={blog.title} image={blog.image} slug={blog.slug} />
         ))}
       </div>
     </div>
