@@ -64,7 +64,7 @@ const writtingpage = () => {
           body: JSON.stringify({
             slug,
             title: ArticleHeading,
-            body: ArticleBody.replaceAll("\n", "<br />"),
+            body: ArticleBody,
             image: downloadUrl,
             authorId: data.id,
           }),

@@ -38,7 +38,7 @@ model Blog {
   created_at    DateTime  @default(now())
   slug          String    @unique @db.VarChar(255)
   title         String    @db.VarChar(255)
-  body          String
+  body          String    @db.LongText
   image         String?   @db.Text
   comment       Comment[]
   tags          Tags[]
