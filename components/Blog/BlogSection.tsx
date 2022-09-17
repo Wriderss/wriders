@@ -13,7 +13,9 @@ type blog_type = {
   id: string;
   title: string;
   numberOfLikes: number;
+  slug: string;
   author: any | string[];
+  likes: any | string[];
 };
 
 const BlogSection = ({ title }: blog_title) => {
@@ -43,7 +45,8 @@ const BlogSection = ({ title }: blog_title) => {
             key={blog.id}
             heading={blog.title}
             avatar={blog.author.profilePhoto}
-            like={blog.numberOfLikes}
+            like={blog.likes.length}
+            slug={blog.slug}
           />
         ))}
       </div>
