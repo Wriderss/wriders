@@ -16,7 +16,7 @@ export default function ProfileModal({ email }: any) {
 
   const ImagePickerRef = useRef<HTMLInputElement>(null);
 
-  const [userDetails, setUserDetails] = useState<string[]>([]);
+  const [userDetails, setUserDetails] = useState<any>([]);
   const getUserDetails = async () => {
     const resp = await fetch("/api/userDetails", {
       method: "POST",
@@ -35,7 +35,7 @@ export default function ProfileModal({ email }: any) {
   }, [user]);
 
   const [profileBio, setProfileBio] = useState<string>(userDetails?.bio);
-  const [selectedImage, setSelectedImage] = useState<string>(
+  const [selectedImage, setSelectedImage] = useState<string | null>(
     userDetails?.profilePhoto
   );
 
@@ -180,3 +180,4 @@ export default function ProfileModal({ email }: any) {
     </>
   );
 }
+// 01145184000

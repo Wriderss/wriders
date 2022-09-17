@@ -4,10 +4,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
 import YourBlog from "./YourBlog";
 
+type blogType = {
+  title: string;
+  image: string;
+  numberOfLikes: number;
+};
+
 const YourArticle = () => {
   const [user] = useAuthState(auth);
   const email = user?.email;
-  const [userDetails, setUserDetails] = useState<string[]>([]);
+  const [userDetails, setUserDetails] = useState<blogType[]>([]);
   const getUserDetails = async () => {
     const resp = await fetch("/api/userDetails", {
       method: "POST",
@@ -17,8 +23,8 @@ const YourArticle = () => {
       body: JSON.stringify({ email: email }),
     });
 
-    const userDetails = await resp.json();
-    setUserDetails(userDetails);
+    const userData = await resp.json();
+    setUserDetails(userData?.blog);
   };
 
   useEffect(() => {
@@ -28,7 +34,7 @@ const YourArticle = () => {
     <div className="my-4">
       <h1 className="font-semibold text-3xl my-4">Your Article</h1>
       <div className="flex flex-wrap gap-4  items-center">
-        {userDetails?.blog?.map((blog: any) => (
+        {userDetails.map((blog) => (
           <YourBlog
             heading={blog.title}
             image={blog.image}

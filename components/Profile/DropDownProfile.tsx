@@ -10,8 +10,8 @@ import { auth } from "../../lib/firebase";
 
 const DropDownProfile = () => {
   const [user] = useAuthState(auth);
-  const [show, setShow] = useState(false);
-  const [userDetails, setUserDetails] = useState<string[]>([]);
+  const [show, setShow] = useState<boolean>(false);
+  const [userDetails, setUserDetails] = useState<any>([]);
   const email = user?.email;
   const getUserDetails = async () => {
     const resp = await fetch("/api/userDetails", {
@@ -38,7 +38,7 @@ const DropDownProfile = () => {
           data-dropdown-toggle="userDropdown"
           data-dropdown-placement="bottom-start"
           className="h-[30px] w-[30px]  rounded-full cursor-pointer"
-          src={userDetails.profilePhoto}
+          src={userDetails?.profilePhoto}
           alt="User dropdown"
         />
       )}

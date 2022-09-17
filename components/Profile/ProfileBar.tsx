@@ -10,7 +10,7 @@ const ProfileBar = () => {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
   const email = user?.email;
-  const [userDetails, setUserDetails] = useState<string[]>([]);
+  const [userDetails, setUserDetails] = useState<any>([]);
   const getUserDetails = async () => {
     const resp = await fetch("/api/userDetails", {
       method: "POST",

@@ -9,15 +9,15 @@ type blog_title = {
 };
 
 type blog_type = {
-  userName: string;
-  avatar: string;
-  heading: string;
   image: string;
-  id: number;
+  id: string;
+  title: string;
+  numberOfLikes: number;
+  author: any | string[];
 };
 
 const BlogSection = ({ title }: blog_title) => {
-  const [blogs, setBlogs] = useState([]);
+  const [blogs, setBlogs] = useState<blog_type[]>([]);
   async function getBlogs() {
     const response = await fetch("/api/blogs", {
       method: "GET",
