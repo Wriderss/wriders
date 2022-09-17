@@ -18,9 +18,9 @@ export default async function handler(
 
 async function getAllBlogs(req: NextApiRequest, res: NextApiResponse) {
   await prisma.blog
-    .findMany()
+    .findMany({ include: { author: true } })
     .then((data) => {
-      res.status(200).json({ message: "All blogs", data: data, success: true });
+      res.status(200).json(data);
     })
     .catch((e) => {
       res.status(400).json({

@@ -11,24 +11,25 @@ type blog_type = {
   avatar: string;
   heading: string;
   image: string;
+  like: number;
 };
 
-const Blog = ({ username, avatar, heading, image }: blog_type) => {
+const Blog = ({ username, avatar, heading, image, like }: blog_type) => {
   return (
-    <div className="flex flex-col  bg-white py-2 shadow-lg rounded-md">
+    <div className="flex flex-col min-h-[300px] cursor-pointer hover:bg-gray-100  bg-white py-2 shadow-lg rounded-md">
       <div className="px-2">
-        <h1 className="capitalize  text-lg">{heading}</h1>
+        <h1 className="capitalize font-semibold text-lg">{heading}</h1>
       </div>
-      <div>
+      <div className="flex-1 flex   justify-center">
         <img src={image} alt={heading} />
       </div>
       <div className="flex justify-between items-center p-1">
         <div className="flex items-center space-x-2">
           <img src={avatar} alt={username} className="h-8 w-8  rounded-full" />
-          <p className="text-[13px]">{username}</p>
+          <p className="text-[13px] font-semibold">{username}</p>
         </div>
         <div className="flex items-center space-x-2">
-          <span>10.5k</span>
+          <span className="font-semibold">{like}</span>
           <HeartIcon height={20} width={20} />
         </div>
       </div>

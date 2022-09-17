@@ -1,21 +1,21 @@
 import Image from "next/image";
 import React from "react";
-import { PencilSquareIcon, EyeIcon } from "@heroicons/react/24/solid";
+import {
+  PencilSquareIcon,
+  EyeIcon,
+  HeartIcon,
+} from "@heroicons/react/24/outline";
 
-const YourBlog = ({ heading, image, views }: any) => {
+const YourBlog = ({ heading, image, likes }: any) => {
   return (
-    <div className="w-[350px] border border-gray-300 rounded-md shadow-md py-2">
-      <h1 className="font-semibold text-xl uppercase px-2">{heading}</h1>
-      <img src={image} alt={heading} height={"300px"} width={"400px"} />
-      <div className="flex mt-2 px-2 space-y-2 justify-between">
-        <div className="flex items-center space-x-2 ">
-          <PencilSquareIcon height={20} width={20} />
-          <span>Edit Article</span>
-        </div>
-        <div className="flex items-center space-x-2">
-          <EyeIcon height={20} width={20} />
-          <span>{views}</span>
-        </div>
+    <div className="w-[350px] flex flex-col  min-h-[300px] rounded-md border ">
+      <h1 className="p-2 font-semibold text-lg ">{heading}</h1>
+      <div className="flex flex-1 justify-center ">
+        <img src={image} alt={heading} className="object-contain w-full" />
+      </div>
+      <div className="flex justify-end p-2 items-center space-x-2">
+        <HeartIcon height={20} width={20} />
+        <p className="font-semibold">{likes}</p>
       </div>
     </div>
   );
