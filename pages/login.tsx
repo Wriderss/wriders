@@ -8,8 +8,10 @@ import {
 } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleLogin = async () => {
@@ -23,6 +25,7 @@ const Login = () => {
         console.log(e.message);
         toast.error("Something went wrong");
       });
+    router.push("/");
   };
   return (
     <div>

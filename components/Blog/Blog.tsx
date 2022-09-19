@@ -1,10 +1,14 @@
 import React from "react";
 import {
   BookmarkIcon,
+  ChatBubbleBottomCenterIcon,
   EllipsisHorizontalCircleIcon,
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import {
+  ChatBubbleBottomCenterTextIcon,
+  HeartIcon,
+} from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 
 type blog_type = {
@@ -14,9 +18,18 @@ type blog_type = {
   image: string;
   slug: string;
   like: number;
+  comments: any;
 };
 
-const Blog = ({ username, avatar, heading, image, like, slug }: blog_type) => {
+const Blog = ({
+  username,
+  avatar,
+  heading,
+  image,
+  like,
+  slug,
+  comments,
+}: blog_type) => {
   const router = useRouter();
   return (
     <div
@@ -34,9 +47,15 @@ const Blog = ({ username, avatar, heading, image, like, slug }: blog_type) => {
           <img src={avatar} alt={username} className="h-8 w-8  rounded-full" />
           <p className="text-[13px] font-semibold">{username}</p>
         </div>
-        <div className="flex items-center space-x-2">
-          <span className="font-semibold">{like}</span>
-          <HeartIcon height={20} width={20} />
+        <div className="flex space-x-2">
+          <div className="flex items-center space-x-2">
+            <span className="font-semibold">{like}</span>
+            <HeartIcon height={20} width={20} />
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="font-semibold">{comments.length}</span>
+            <ChatBubbleBottomCenterTextIcon height={20} width={20} />
+          </div>
         </div>
       </div>
     </div>

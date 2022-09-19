@@ -8,6 +8,7 @@ import CommentSection from "../components/comments/CommentSection";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebase";
+import { Toaster } from "react-hot-toast";
 
 type slug_type = {
   slug: string;
@@ -27,14 +28,14 @@ const blog = () => {
       body: JSON.stringify({ slug: slug }),
     });
     const data = await response.json();
-    console.log(data);
     setBlog(data);
   }
   useEffect(() => {
     getDetails();
-  }, [user]);
+  }, [user, slug]);
   return (
     <div className="flex">
+      <Toaster />
       <Head>
         <title>Wrider | {slug}</title>
       </Head>
@@ -46,6 +47,8 @@ const blog = () => {
             author={blog.author}
             title={blog.title}
             coverImage={blog.image}
+            created_at={blog.created_at}
+            body={blog.body}
           />
           <div className="flex justify-between mt-4">
             <MainBlog

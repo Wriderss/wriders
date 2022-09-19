@@ -17,6 +17,7 @@ export default function ProfileModal({ email }: any) {
   const ImagePickerRef = useRef<HTMLInputElement>(null);
 
   const [userDetails, setUserDetails] = useState<any>([]);
+  const [newProfile, setNewProfile] = useState([]);
   const getUserDetails = async () => {
     const resp = await fetch("/api/userDetails", {
       method: "POST",
@@ -30,43 +31,67 @@ export default function ProfileModal({ email }: any) {
     setUserDetails(userDetails);
   };
 
-  useEffect(() => {
-    getUserDetails();
-  }, [user]);
-
   const [profileBio, setProfileBio] = useState<string>(userDetails?.bio);
   const [selectedImage, setSelectedImage] = useState<string | null>(
     userDetails?.profilePhoto
   );
 
   const updateProfile = async () => {
-    const imageRef = ref(storage, `user/${user?.email}/profilePhoto`);
-    if (selectedImage) {
-      await uploadString(imageRef, String(selectedImage), "data_url");
-    }
-    const downloadUrl = await getDownloadURL(imageRef);
-    const response = await fetch("/api/updateProfile", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        profilePhoto: selectedImage && downloadUrl,
-        bio: profileBio && profileBio,
-        email: email,
-      }),
-    })
-      .then(() => {
-        toast.success("Referesh the pages ♻");
-        dispatch(modalClose());
-        setTimeout(() => {
-          dispatch(modalClose());
-        }, 7000);
+    if (!selectedImage) {
+      console.log("hello there.");
+      const response = await fetch("/api/updateProfile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          bio: profileBio && profileBio,
+          email: email,
+        }),
       })
-      .catch((e) => {
-        toast.error("Something went wrong.😞");
-        dispatch(modalClose());
-      });
+        .then(({ data }: any) => {
+          toast.success("Referesh the pages ♻");
+          dispatch(modalClose());
+          setTimeout(() => {
+            dispatch(modalClose());
+          }, 7000);
+          setNewProfile(data);
+        })
+        .catch((e) => {
+          toast.error("Something went wrong.😞");
+          dispatch(modalClose());
+        });
+    } else {
+      const imageRef = ref(storage, `user/${user?.email}/profilePhoto`);
+      if (selectedImage) {
+        await uploadString(imageRef, String(selectedImage), "data_url");
+      }
+
+      const downloadUrl = await getDownloadURL(imageRef);
+      const response = await fetch("/api/updateProfile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          profilePhoto: selectedImage && downloadUrl,
+          bio: profileBio && profileBio,
+          email: email,
+        }),
+      })
+        .then(({ data }: any) => {
+          toast.success("Referesh the pages ♻");
+          dispatch(modalClose());
+          setTimeout(() => {
+            dispatch(modalClose());
+          }, 7000);
+          setNewProfile(data);
+        })
+        .catch((e) => {
+          toast.error("Something went wrong.😞");
+          dispatch(modalClose());
+        });
+    }
   };
 
   const addImageToBlog = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,7 +103,9 @@ export default function ProfileModal({ email }: any) {
       setSelectedImage(readerEvent.target?.result as string);
     };
   };
-
+  useEffect(() => {
+    getUserDetails();
+  }, [user, newProfile]);
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -140,7 +167,11 @@ export default function ProfileModal({ email }: any) {
                           onClick={() => ImagePickerRef.current?.click()}
                         >
                           <img
-                            src={userDetails?.profilePhoto}
+                            src={
+                              userDetails?.profilePhoto
+                                ? userDetails?.profilePhoto
+                                : `https://avatars.dicebear.com/api/avataaars/${userDetails?.email}.svg`
+                            }
                             alt="profile-photo"
                             className="rounded-full border border-gray-900 cursor-pointer "
                           />
