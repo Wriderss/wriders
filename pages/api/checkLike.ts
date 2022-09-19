@@ -13,15 +13,15 @@ export default async function handler(
 }
 
 async function checkBlogLike(req: NextApiRequest, res: NextApiResponse) {
-  const { userId, blogId } = req.body;
+  const { blogId, userId } = req.body;
   await prisma.like
-    .findFirst({
-      where: { OR: [userId, blogId] },
+    .findMany({
+      where: {
+        blogId: blogId,
+        userId: userId,
+      },
     })
-    .then((data) => {
-      res.status(200).json({ data, success: true });
-    })
-    .catch((e) => {
-      res.status(400).json({ data: e.message, success: false });
-    });
+
+    .then((data) => res.status(200).json({ success: true, data }))
+    .catch((e) => res.status(500).json({ success: false }));
 }

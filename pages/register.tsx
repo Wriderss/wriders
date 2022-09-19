@@ -6,8 +6,10 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { ResponseType } from "../interfaces";
 import toast, { Toaster } from "react-hot-toast";
+import Router, { useRouter } from "next/router";
 
 const Register = () => {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,16 +24,14 @@ const Register = () => {
         alert(e.message);
         console.log(e);
       });
-    const response = await fetch("/api/user", {
+    await fetch("/api/user", {
       method: "POST",
       body: JSON.stringify({ email, name: username }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const { message, data, success } = await response.json();
-    console.log(data);
-    alert(message);
+    router.push("/");
   };
   return (
     <div>

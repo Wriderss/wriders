@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { faker } from "@faker-js/faker";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Blog from "./Blog";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../lib/firebase";
 
 type blog_title = {
   title: string;
@@ -16,9 +18,11 @@ type blog_type = {
   slug: string;
   author: any | string[];
   likes: any | string[];
+  comment: any;
 };
 
 const BlogSection = ({ title }: blog_title) => {
+  const [user] = useAuthState(auth);
   const [blogs, setBlogs] = useState<blog_type[]>([]);
   async function getBlogs() {
     const response = await fetch("/api/blogs", {
@@ -29,7 +33,6 @@ const BlogSection = ({ title }: blog_title) => {
     });
     const data = await response.json();
     setBlogs(data);
-    console.log(data);
   }
   useEffect(() => {
     getBlogs();
@@ -44,9 +47,14 @@ const BlogSection = ({ title }: blog_title) => {
             image={blog.image}
             key={blog.id}
             heading={blog.title}
-            avatar={blog.author.profilePhoto}
+            avatar={
+              blog.author.profilePhoto
+                ? blog.author.profilePhoto
+                : `https://avatars.dicebear.com/api/avataaars/${user?.email}.svg`
+            }
             like={blog.likes.length}
             slug={blog.slug}
+            comments={blog.comment}
           />
         ))}
       </div>

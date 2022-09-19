@@ -39,7 +39,7 @@ const ProfileBar = () => {
             src={
               userDetails?.profilePhoto
                 ? userDetails?.profilePhoto
-                : `https://avatars.dicebear.com/api/avataaars/${userDetails?.email}.svg`
+                : `https://avatars.dicebear.com/api/avataaars/${user?.email}.svg`
             }
             height={160}
             width={160}

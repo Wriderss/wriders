@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../lib/firebase";
+import moment from "moment";
 
-const BlogHeader = ({ author, title, coverImage }: any) => {
+const BlogHeader = ({ author, title, coverImage, created_at, body }: any) => {
+  const [user] = useAuthState(auth);
+  const readingTime = () => {
+    const wpm = 225;
+    const words = body?.trim().split(/\s+/).length;
+    const time = Math.ceil(words / wpm);
+    return time;
+  };
   return (
     <div
       style={{ backgroundImage: `url(${coverImage})` }}
@@ -10,7 +20,11 @@ const BlogHeader = ({ author, title, coverImage }: any) => {
       <div className=" justify-center min-w-[400px]  ml-4 flex flex-col ">
         <div className="-mt-[5rem] mx-auto z-[999]">
           <Image
-            src={author?.profilePhoto}
+            src={
+              author?.profilePhoto
+                ? author?.profilePhoto
+                : `https://avatars.dicebear.com/api/avataaars/${user?.email}.svg`
+            }
             height={150}
             width={150}
             alt="user-img"
@@ -22,9 +36,9 @@ const BlogHeader = ({ author, title, coverImage }: any) => {
             {title}
           </h1>
           <div className="flex justify-around  items-center w-[70%] mx-auto pt-2 text-white">
-            <span>29 march 2022 </span>{" "}
+            <span>{moment(created_at).fromNow()}</span>{" "}
             <span className="bg-white h-[20px] w-[1px] " />{" "}
-            <span> 3 min read</span>
+            <span>{readingTime()} min read</span>
           </div>
           <p className="font-semibold text-white pt-2">- By {author?.name}</p>
         </div>

@@ -31,7 +31,7 @@ const DropDownProfile = () => {
   }, [user]);
   return (
     <div className="relative mr-4">
-      {userDetails && (
+      {userDetails?.profilePhoto ? (
         <img
           id="avatarButton"
           onClick={() => setShow(!show)}
@@ -39,6 +39,16 @@ const DropDownProfile = () => {
           data-dropdown-placement="bottom-start"
           className="h-[30px] w-[30px]  rounded-full cursor-pointer"
           src={userDetails?.profilePhoto}
+          alt="User dropdown"
+        />
+      ) : (
+        <img
+          id="avatarButton"
+          onClick={() => setShow(!show)}
+          data-dropdown-toggle="userDropdown"
+          data-dropdown-placement="bottom-start"
+          className="h-[30px] w-[30px]  rounded-full cursor-pointer"
+          src={`https://avatars.dicebear.com/api/avataaars/${userDetails?.email}.svg`}
           alt="User dropdown"
         />
       )}

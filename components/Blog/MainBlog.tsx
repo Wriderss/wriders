@@ -6,35 +6,63 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import CommentSection from "../comments/CommentSection";
+import toast from "react-hot-toast";
 
 const MainBlog = ({ title, body, slug, like, userId, blogId }: any) => {
+  const [user] = useAuthState(auth);
+  const email = user?.email;
+  const [userDetails, setUserDetails] = useState<any>([]);
   const router = useRouter();
-  const [liked, setLiked] = useState<boolean>();
+  const [liked, setLiked] = useState<boolean>(false);
+  const [newLiked, setNewLiked] = useState([]);
+  const getUserDetails = async () => {
+    const resp = await fetch("/api/userDetails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email }),
+    });
+
+    const userDetails = await resp.json();
+    setUserDetails(userDetails);
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, [user]);
   const checkingLike = async () => {
     const checkLike = await fetch("/api/checkLike", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId, blogId }),
+      body: JSON.stringify({ userId: userDetails.id, blogId }),
     });
-    const { success } = await checkLike.json();
-    console.log(success);
-    setLiked(success);
+    const { success, data } = await checkLike.json();
+    const userLiked = data.filter(
+      (like: any) => like.userId === userDetails.id
+    );
+    if (userLiked.length === 1) {
+      setLiked(true);
+    } else {
+      setLiked(false);
+    }
   };
   useEffect(() => {
     checkingLike();
-  }, [userId]);
+  }, [userDetails, blogId, user, newLiked]);
   const handleLike = async () => {
     const response = await fetch("/api/hitLike", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId, blogId }),
+      body: JSON.stringify({ userId: userDetails.id, blogId }),
     });
     const data = await response.json();
-    console.log(data);
+    setNewLiked(data);
   };
   return (
     <div className="w-full mb-[2rem]">
@@ -48,8 +76,10 @@ const MainBlog = ({ title, body, slug, like, userId, blogId }: any) => {
       <div className="flex  my-[2rem] space-x-4 justify-center">
         <div
           onClick={() => {
-            if (liked) return;
-            handleLike();
+            if (liked) toast.success("You already liked this post.");
+            else {
+              handleLike();
+            }
           }}
           className={`flex space-x-4 p-2 cursor-pointer hover:bg-gray-300 bg-gray-200 rounded-md items-center ${
             liked ? "bg-red-500 text-white" : "bg-gray-200 "
@@ -65,6 +95,7 @@ const MainBlog = ({ title, body, slug, like, userId, blogId }: any) => {
           </div>
         </Link>
       </div>
+      <CommentSection blogId={blogId} />
     </div>
   );
 };
