@@ -10,11 +10,11 @@ import toast from "react-hot-toast";
 
 type commentType = {
   blogId: string;
+  userId: string;
 };
 
-const CommentSection = ({ blogId }: commentType) => {
+const CommentSection = ({ blogId, userId }: commentType) => {
   const [commentInput, setCommentInput] = useState<string>("");
-  const [userDetails, setUserDetails] = useState<any>([]);
   const [comments, setComments] = useState<any>([]);
   const [user] = useAuthState(auth);
   const email = user?.email;
@@ -25,7 +25,7 @@ const CommentSection = ({ blogId }: commentType) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        authorId: userDetails.id,
+        authorId: userId,
         blogId,
         body: commentInput,
       }),
@@ -40,19 +40,9 @@ const CommentSection = ({ blogId }: commentType) => {
         console.log(e.message);
       });
   };
-  const getUserDetails = async () => {
-    const resp = await fetch("/api/userDetails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email }),
-    });
 
-    const userDetails = await resp.json();
-    setUserDetails(userDetails);
-  };
   const getAllComments = async () => {
+    if (!blogId) return;
     const response = await fetch("/api/blogComment", {
       method: "POST",
       headers: {
@@ -64,14 +54,8 @@ const CommentSection = ({ blogId }: commentType) => {
     setComments(Allcomments);
   };
   useEffect(() => {
-    getUserDetails();
-  }, [user]);
-  useEffect(() => {
-    if (!blogId) return;
-    else {
-      getAllComments();
-    }
-  }, [user, blogId, commentInput]);
+    getAllComments();
+  }, [blogId, commentInput]);
   return (
     <div className="my-4">
       <h1 className="text-2xl font-semibold">Comments</h1>

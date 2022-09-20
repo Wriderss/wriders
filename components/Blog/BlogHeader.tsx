@@ -36,9 +36,9 @@ const BlogHeader = ({ author, title, coverImage, created_at, body }: any) => {
             {title}
           </h1>
           <div className="flex justify-around  items-center w-[70%] mx-auto pt-2 text-white">
-            <span>{moment(created_at).fromNow()}</span>{" "}
+            {created_at && <span>{moment(created_at).fromNow()}</span>}
             <span className="bg-white h-[20px] w-[1px] " />{" "}
-            <span>{readingTime()} min read</span>
+            {readingTime() && <span>{readingTime()} min read</span>}
           </div>
           <p className="font-semibold text-white pt-2">- By {author?.name}</p>
         </div>

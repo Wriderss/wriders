@@ -8,37 +8,24 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
 
-const DropDownProfile = () => {
-  const [user] = useAuthState(auth);
+type dropProps = {
+  userEmail: string;
+  profilePhoto: string;
+  userName: string;
+};
+
+const DropDownProfile = ({ userEmail, profilePhoto, userName }: dropProps) => {
   const [show, setShow] = useState<boolean>(false);
-  const [userDetails, setUserDetails] = useState<any>([]);
-  const email = user?.email;
-  const getUserDetails = async () => {
-    const resp = await fetch("/api/userDetails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email }),
-    });
-
-    const userDetails = await resp.json();
-    setUserDetails(userDetails);
-  };
-
-  useEffect(() => {
-    getUserDetails();
-  }, [user]);
   return (
     <div className="relative mr-4">
-      {userDetails?.profilePhoto ? (
+      {profilePhoto ? (
         <img
           id="avatarButton"
           onClick={() => setShow(!show)}
           data-dropdown-toggle="userDropdown"
           data-dropdown-placement="bottom-start"
           className="h-[30px] w-[30px]  rounded-full cursor-pointer"
-          src={userDetails?.profilePhoto}
+          src={profilePhoto}
           alt="User dropdown"
         />
       ) : (
@@ -48,7 +35,7 @@ const DropDownProfile = () => {
           data-dropdown-toggle="userDropdown"
           data-dropdown-placement="bottom-start"
           className="h-[30px] w-[30px]  rounded-full cursor-pointer"
-          src={`https://avatars.dicebear.com/api/avataaars/${userDetails?.email}.svg`}
+          src={`https://avatars.dicebear.com/api/avataaars/${userEmail}.svg`}
           alt="User dropdown"
         />
       )}
@@ -60,8 +47,8 @@ const DropDownProfile = () => {
         }  -left-[130px] mr-4 z-10 w-44 mt-2 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600`}
       >
         <div className="py-3 px-4 text-sm text-gray-900 dark:text-white">
-          <div className="capitalize font-semibold">{userDetails?.name}</div>
-          <div className="font-medium truncate">{userDetails?.email}</div>
+          <div className="capitalize font-semibold">{userName}</div>
+          <div className="font-medium truncate">{userEmail}</div>
         </div>
         <ul
           className="py-1 text-sm text-gray-700 dark:text-gray-200"
