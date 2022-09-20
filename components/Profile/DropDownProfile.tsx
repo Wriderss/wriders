@@ -4,6 +4,7 @@ import {
   CurrencyDollarIcon,
 } from "@heroicons/react/24/solid";
 import { signOut } from "firebase/auth";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
@@ -17,28 +18,33 @@ type dropProps = {
 const DropDownProfile = ({ userEmail, profilePhoto, userName }: dropProps) => {
   const [show, setShow] = useState<boolean>(false);
   return (
-    <div className="relative mr-4">
-      {profilePhoto ? (
-        <img
-          id="avatarButton"
-          onClick={() => setShow(!show)}
-          data-dropdown-toggle="userDropdown"
-          data-dropdown-placement="bottom-start"
-          className="h-[30px] w-[30px]  rounded-full cursor-pointer"
-          src={profilePhoto}
-          alt="User dropdown"
-        />
-      ) : (
-        <img
-          id="avatarButton"
-          onClick={() => setShow(!show)}
-          data-dropdown-toggle="userDropdown"
-          data-dropdown-placement="bottom-start"
-          className="h-[30px] w-[30px]  rounded-full cursor-pointer"
-          src={`https://avatars.dicebear.com/api/avataaars/${userEmail}.svg`}
-          alt="User dropdown"
-        />
-      )}
+    <div className="relative mr-4 ">
+      <div className="relative h-[30px] w-[30px]">
+        {profilePhoto ? (
+          <Image
+            id="avatarButton"
+            onClick={() => setShow(!show)}
+            data-dropdown-toggle="userDropdown"
+            data-dropdown-placement="bottom-start"
+            className="h-[30px] w-[30px]  rounded-full cursor-pointer"
+            src={profilePhoto}
+            alt="User dropdown"
+            layout="fill"
+          />
+        ) : (
+          <Image
+            id="avatarButton"
+            onClick={() => setShow(!show)}
+            data-dropdown-toggle="userDropdown"
+            data-dropdown-placement="bottom-start"
+            className="h-[30px] w-[30px]  rounded-full cursor-pointer"
+            src={`https://avatars.dicebear.com/api/avataaars/${userEmail}.svg`}
+            alt="User dropdown"
+            layout="fill"
+          />
+        )}
+      </div>
+
 
       <div
         id="userDropdown"

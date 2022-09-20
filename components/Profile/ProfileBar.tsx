@@ -35,6 +35,7 @@ const ProfileBar = ({
       <div className="w-full bg-gray-100 flex space-x-[4rem] mx-auto space-center ">
         <div className="-mt-[80px]  w-[30%] border-r border-black  text-center">
           <Image
+            priority
             src={
               profilePhoto
                 ? profilePhoto
