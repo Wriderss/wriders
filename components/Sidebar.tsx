@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/router";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
+import toast from "react-hot-toast";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -25,12 +26,14 @@ const Sidebar = () => {
           className="menu-item"
         />
         <BellIcon
+          onClick={() => toast.success("Coming Soon too..", { icon: "🔜" })}
           height={40}
           width={40}
           color={"white"}
           className="menu-item"
         />
         <HashtagIcon
+          onClick={() => toast.success("Coming Soon too..", { icon: "🔜" })}
           height={40}
           width={40}
           color={"white"}
@@ -44,12 +47,14 @@ const Sidebar = () => {
           className="menu-item"
         />
         <BookmarkIcon
+          onClick={() => toast.success("Coming Soon too..", { icon: "🔜" })}
           className="menu-item md:hidden"
           color={"white"}
           height={40}
           width={40}
         />
         <MoonIcon
+          onClick={() => toast.success("Coming Soon too..", { icon: "🔜" })}
           className="menu-item md:hidden"
           color={"white"}
           height={40}

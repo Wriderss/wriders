@@ -45,8 +45,8 @@ const writtingpage = () => {
     setLoading(true);
     const email = user?.email;
     const imageRef = ref(storage, `blogs/${slug}/image`);
-    await uploadString(imageRef, String(selectedImage), "data_url").then(
-      async () => {
+    await uploadString(imageRef, String(selectedImage), "data_url")
+      .then(async () => {
         const responseEmail = await fetch("/api/userId", {
           method: "POST",
           headers: {
@@ -62,7 +62,7 @@ const writtingpage = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            slug,
+            slug: slug + Math.random() * (1000 - 1) + 1,
             title: ArticleHeading,
             body: ArticleBody,
             image: downloadUrl,
@@ -75,8 +75,8 @@ const writtingpage = () => {
         SetArticleHeading("");
         setSelectedImage(null);
         toast.success("Blog is Created", { icon: "✅" });
-      }
-    );
+      })
+      .catch((e) => toast.error("Something went wrong"));
   };
   return (
     <div className="flex">
@@ -132,7 +132,7 @@ const writtingpage = () => {
                 </h1>
               </div>
             )}
-            <div className="border-b flex space-x-2 border-black w-full my-2 p-2">
+            {/* <div className="border-b flex space-x-2 border-black w-full my-2 p-2">
               {tags.map((tag, i) => (
                 <div
                   key={i}
@@ -155,7 +155,7 @@ const writtingpage = () => {
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
               />
-            </div>
+            </div> */}
             <input
               type="text"
               className=" border-b border-black capitalize focus:border-b-2 focus:border-blue-500 w-full my-4 text-4xl outline-none"

@@ -6,6 +6,7 @@ import BlogSection from "../components/Blog/BlogSection";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebase";
 import Login from "./login";
+import { Toaster } from "react-hot-toast";
 
 const Dashboard = () => {
   const [user] = useAuthState(auth);
@@ -41,6 +42,7 @@ const Dashboard = () => {
       </Head>
       {/* Sidebar */}
       <Sidebar />
+      <Toaster />
       {/* Main-content */}
       <div className="flex-1 md:ml-[50px] ml-[12vw] md:w-full w-[90vw] overflow-y-hidden">
         <Header
