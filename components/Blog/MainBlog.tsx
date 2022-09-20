@@ -4,46 +4,23 @@ import { HandThumbUpIcon } from "@heroicons/react/24/outline";
 import { ShareIcon } from "@heroicons/react/24/solid";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import CommentSection from "../comments/CommentSection";
 import toast from "react-hot-toast";
 
-const MainBlog = ({ title, body, slug, like, userId, blogId }: any) => {
-  const [user] = useAuthState(auth);
-  const email = user?.email;
-  const [userDetails, setUserDetails] = useState<any>([]);
-  const router = useRouter();
+const MainBlog = ({ title, body, slug, userId, blogId }: any) => {
   const [liked, setLiked] = useState<boolean>(false);
   const [newLiked, setNewLiked] = useState([]);
-  const getUserDetails = async () => {
-    const resp = await fetch("/api/userDetails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email }),
-    });
-
-    const userDetails = await resp.json();
-    setUserDetails(userDetails);
-  };
-
-  useEffect(() => {
-    getUserDetails();
-  }, [user]);
   const checkingLike = async () => {
     const checkLike = await fetch("/api/checkLike", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: userDetails.id, blogId }),
+      body: JSON.stringify({ userId: userId, blogId }),
     });
-    const { success, data } = await checkLike.json();
-    const userLiked = data.filter(
-      (like: any) => like.userId === userDetails.id
-    );
+    const { data } = await checkLike.json();
+    const userLiked = data.filter((like: any) => like.userId === userId);
     if (userLiked.length === 1) {
       setLiked(true);
     } else {
@@ -52,14 +29,14 @@ const MainBlog = ({ title, body, slug, like, userId, blogId }: any) => {
   };
   useEffect(() => {
     checkingLike();
-  }, [userDetails, blogId, user, newLiked]);
+  }, [blogId, userId, newLiked]);
   const handleLike = async () => {
     const response = await fetch("/api/hitLike", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: userDetails.id, blogId }),
+      body: JSON.stringify({ userId: userId, blogId }),
     });
     const data = await response.json();
     setNewLiked(data);
@@ -81,8 +58,10 @@ const MainBlog = ({ title, body, slug, like, userId, blogId }: any) => {
               handleLike();
             }
           }}
-          className={`flex space-x-4 p-2 cursor-pointer hover:bg-gray-300 bg-gray-200 rounded-md items-center ${
-            liked ? "bg-red-500 text-white" : "bg-gray-200 "
+          className={`flex space-x-4 p-2 cursor-pointer  bg-gray-200 rounded-md items-center ${
+            liked
+              ? "bg-red-500 hover:bg-red-400 text-white"
+              : "bg-gray-200 hover:bg-gray-300 "
           }`}
         >
           <HandThumbUpIcon height={30} width={30} />
@@ -95,7 +74,7 @@ const MainBlog = ({ title, body, slug, like, userId, blogId }: any) => {
           </div>
         </Link>
       </div>
-      <CommentSection blogId={blogId} />
+      <CommentSection blogId={blogId} userId={userId} />
     </div>
   );
 };

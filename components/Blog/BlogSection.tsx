@@ -36,7 +36,7 @@ const BlogSection = ({ title }: blog_title) => {
   }
   useEffect(() => {
     getBlogs();
-  }, []);
+  }, [user]);
   return (
     <div className="w-[90%]  mx-auto my-4 p-2  ">
       <h1 className="text-3xl font-bold py-2">{title}</h1>

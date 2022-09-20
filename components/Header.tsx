@@ -8,7 +8,7 @@ import {
 import DropDownProfile from "./Profile/DropDownProfile";
 import { useRouter } from "next/router";
 
-const Header = ({ title }: any) => {
+const Header = ({ title, name, email, profilePhoto }: any) => {
   const router = useRouter();
   return (
     <header className="flex items-center space-x-[3rem] w-[95%] mx-auto p-4 px-[2rem] justify-between">
@@ -42,7 +42,11 @@ const Header = ({ title }: any) => {
           height={40}
           width={40}
         />
-        <DropDownProfile />
+        <DropDownProfile
+          userEmail={email}
+          userName={name}
+          profilePhoto={profilePhoto}
+        />
       </div>
     </header>
   );

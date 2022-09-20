@@ -16,10 +16,13 @@ type slug_type = {
 
 const blog = () => {
   const [user] = useAuthState(auth);
+  const email = user?.email;
   const router = useRouter();
   const { slug } = router.query;
   const [blog, setBlog] = useState<any>([]);
+  const [userDetails, setUserDetails] = useState<any>([]);
   async function getDetails() {
+    if (!slug) return;
     const response = await fetch("/api/blogDetails", {
       method: "POST",
       headers: {
@@ -28,11 +31,30 @@ const blog = () => {
       body: JSON.stringify({ slug: slug }),
     });
     const data = await response.json();
+    console.log(data);
     setBlog(data);
   }
+  const getUserDetails = async () => {
+    if (!email) return;
+    const resp = await fetch("/api/userDetails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email }),
+    });
+
+    const userDetails = await resp.json();
+    setUserDetails(userDetails);
+  };
+
   useEffect(() => {
     getDetails();
-  }, [user, slug]);
+  }, [slug]);
+  useEffect(() => {
+    getUserDetails();
+  }, [user]);
+  if (!user) return <div>Loading...</div>;
   return (
     <div className="flex">
       <Toaster />
@@ -41,7 +63,12 @@ const blog = () => {
       </Head>
       <Sidebar />
       <div className="md:ml-[50px] ml-[15vw] md:w-full  flex-1  w-[90vw]  ">
-        <Header title={"Home"} />
+        <Header
+          title={"Home"}
+          name={userDetails?.name}
+          email={userDetails?.email}
+          profilePhoto={userDetails?.profilePhoto}
+        />
         <div className="ml-[4rem] w-[90%] mx-auto">
           <BlogHeader
             author={blog.author}
@@ -55,7 +82,7 @@ const blog = () => {
               title={blog.title}
               body={blog.body}
               blogId={blog.id}
-              userId={blog.authorId}
+              userId={userDetails?.id}
               slug={slug}
             />
           </div>

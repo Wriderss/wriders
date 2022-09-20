@@ -9,31 +9,15 @@ import { useAppSelector } from "../../app/hooks";
 import { auth, storage } from "../../lib/firebase";
 import { modalClose, modalOpen } from "../../slices/modalSlice";
 
-export default function ProfileModal({ email }: any) {
-  const [user] = useAuthState(auth);
+export default function ProfileModal({ email, profilePhoto, bio }: any) {
   const isOpen = useAppSelector((state) => state.modal.ModalState);
   const dispatch = useDispatch();
 
   const ImagePickerRef = useRef<HTMLInputElement>(null);
 
-  const [userDetails, setUserDetails] = useState<any>([]);
-  const [newProfile, setNewProfile] = useState([]);
-  const getUserDetails = async () => {
-    const resp = await fetch("/api/userDetails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email }),
-    });
-
-    const userDetails = await resp.json();
-    setUserDetails(userDetails);
-  };
-
-  const [profileBio, setProfileBio] = useState<string>(userDetails?.bio);
+  const [profileBio, setProfileBio] = useState<string>(bio);
   const [selectedImage, setSelectedImage] = useState<string | null>(
-    userDetails?.profilePhoto
+    profilePhoto
   );
 
   const updateProfile = async () => {
@@ -55,14 +39,13 @@ export default function ProfileModal({ email }: any) {
           setTimeout(() => {
             dispatch(modalClose());
           }, 7000);
-          setNewProfile(data);
         })
         .catch((e) => {
           toast.error("Something went wrong.😞");
           dispatch(modalClose());
         });
     } else {
-      const imageRef = ref(storage, `user/${user?.email}/profilePhoto`);
+      const imageRef = ref(storage, `user/${email}/profilePhoto`);
       if (selectedImage) {
         await uploadString(imageRef, String(selectedImage), "data_url");
       }
@@ -85,7 +68,6 @@ export default function ProfileModal({ email }: any) {
           setTimeout(() => {
             dispatch(modalClose());
           }, 7000);
-          setNewProfile(data);
         })
         .catch((e) => {
           toast.error("Something went wrong.😞");
@@ -103,9 +85,6 @@ export default function ProfileModal({ email }: any) {
       setSelectedImage(readerEvent.target?.result as string);
     };
   };
-  useEffect(() => {
-    getUserDetails();
-  }, [user, newProfile]);
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -168,9 +147,9 @@ export default function ProfileModal({ email }: any) {
                         >
                           <img
                             src={
-                              userDetails?.profilePhoto
-                                ? userDetails?.profilePhoto
-                                : `https://avatars.dicebear.com/api/avataaars/${userDetails?.email}.svg`
+                              profilePhoto
+                                ? profilePhoto
+                                : `https://avatars.dicebear.com/api/avataaars/${email}.svg`
                             }
                             alt="profile-photo"
                             className="rounded-full border border-gray-900 cursor-pointer "
