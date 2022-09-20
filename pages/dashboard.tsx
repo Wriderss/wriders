@@ -6,7 +6,6 @@ import BlogSection from "../components/Blog/BlogSection";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebase";
 import Login from "./login";
-import { prisma } from "../prisma/prisma";
 
 const Dashboard = () => {
   const [user] = useAuthState(auth);

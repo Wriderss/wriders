@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
-import Comment from "./Comment";
-import CommentInput from "./CommentInput";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
 import Image from "next/image";
