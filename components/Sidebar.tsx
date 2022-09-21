@@ -26,7 +26,7 @@ const Sidebar = () => {
           className="menu-item"
         />
         <BellIcon
-          onClick={() => toast.success("Coming Soon too..", { icon: "🔜" })}
+          onClick={() => router.push("/notification-page")}
           height={40}
           width={40}
           color={"black"}

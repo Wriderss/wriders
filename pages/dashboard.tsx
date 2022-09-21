@@ -7,9 +7,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebase";
 import Login from "./login";
 import { Toaster } from "react-hot-toast";
+import Loading from "../components/loading/Loading";
 
 const Dashboard = () => {
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const email = user?.email;
   const [userDetails, setUserDetails] = useState<any>([]);
 
@@ -31,10 +32,10 @@ const Dashboard = () => {
     getUserDetails();
   }, []);
 
+  if (loading) return <Loading />;
   if (!user) {
     return <Login />;
   }
-
   return (
     <main className="flex">
       <Head>
