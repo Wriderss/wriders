@@ -1,29 +1,24 @@
-# Next.js + Tailwind CSS Example
+# Wrider (Youtube for Content Writer.) ✍
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+- An application for writting blogs for content-writers and a way for them to get some earning
 
-## Deploy your own
+## Features Available on the application till now -
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+1. Login/Create an Account (forget password functionality available).
+2. Explore other people blog like them and comment your thoughts on them.
+3. Write blog on your own with just one click and publish it to the world.
+4. Add your bio and your profile photo to make your account looks more legit.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+## Tech stack used to make this application -
 
-## How to use
+1. Next js
+2. Tailwind CSS
+3. Firebase (for authentication purposes)
+4. Planetscale (for scalable databases).
+5. Prisma (ORM)
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+### Note - This is the first version (MVP) of this application so there might be some bugs you come across to make sure to create an issue for that also.
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-```
+### Note - If you have any request feature in your mind which you want to get integrate into the application please make sure to create an issue for that.
 
-```bash
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
-
-```bash
-pnpm create next-app --example with-tailwindcss with-tailwindcss-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-
-Wrider
+You can check the application live on [Wride](https://www.wride.io/)
