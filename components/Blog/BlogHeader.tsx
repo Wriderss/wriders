@@ -17,7 +17,7 @@ const BlogHeader = ({ author, title, coverImage, created_at, body }: any) => {
       style={{ backgroundImage: `url(${coverImage})` }}
       className={` flex items-center  h-[400px] bg-gray-500 bg-fixed w-full relative bg-no-repeat bg-cover`}
     >
-      <div className=" justify-center min-w-[400px]  ml-4 flex flex-col ">
+      <div className=" justify-center min-w-[400px] max-w-[500px]  ml-4 flex flex-col ">
         <div className="-mt-[5rem] mx-auto z-[999]">
           <Image
             priority
