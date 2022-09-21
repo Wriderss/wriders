@@ -1,3 +1,10 @@
-# work for today - 
-1. Add a comment section functionality . 
-2. Add a more good flow in the application. 
+# Work for Today - 
+1. Add a dark mode as well. 
+2. Add a view functionality.
+3. Add a loading bar while editing the profile . (done)
+
+
+# In future . 
+1. Add follower and following feature.
+2. Add tags into the blogs so that to differentiate them .
+3. Add a Favourite Section for blogs in the Application.
