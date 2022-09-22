@@ -46,6 +46,7 @@ model Blog {
   numberOfLikes Int       @default(0)
   author        User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId      String
+  views         View[]
 }
 
 model Tags {
@@ -72,4 +73,12 @@ model Like {
   blogId     String
   user       User     @relation(references: [id], fields: [userId], onDelete: Cascade)
   userId     String
+}
+
+model View {
+  id         String   @id @default(cuid())
+  created_at DateTime @default(now())
+  email      String
+  blog       Blog     @relation(references: [id], fields: [blogId], onDelete: Cascade)
+  blogId     String
 }

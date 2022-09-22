@@ -19,6 +19,7 @@ type blog_type = {
   author: any | string[];
   likes: any | string[];
   comment: any;
+  views: [];
 };
 
 const BlogSection = ({ title }: blog_title) => {
@@ -55,6 +56,7 @@ const BlogSection = ({ title }: blog_title) => {
             like={blog.likes.length}
             slug={blog.slug}
             comments={blog.comment}
+            views={blog.views.length}
           />
         ))}
       </div>

@@ -48,12 +48,32 @@ const blog = () => {
     setUserDetails(userDetails);
   };
 
+  const IncrementViews = async () => {
+    const blogId = blog.id;
+    if (!blogId) return;
+    const response = await fetch("/api/IncrementViews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, blogId }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
   useEffect(() => {
     getDetails();
   }, [slug]);
   useEffect(() => {
     getUserDetails();
   }, [user]);
+  useEffect(() => {
+    if (blog.id && email) {
+      IncrementViews();
+    } else {
+      return;
+    }
+  }, [blog]);
   if (!user) return <div>Loading...</div>;
   return (
     <div className="flex">
