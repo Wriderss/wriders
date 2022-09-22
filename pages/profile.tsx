@@ -39,7 +39,7 @@ const profile = () => {
 
       <Sidebar />
       <div
-        className={`md:ml-[50px] ml-[15vw] md:w-full  flex-1  w-[90vw]  ${
+        className={`md:ml-[50px] min-h-screen ml-[15vw] md:w-full  flex-1  w-[90vw]  ${
           mode ? "bg-gray-900" : "bg-white"
         }`}
       >

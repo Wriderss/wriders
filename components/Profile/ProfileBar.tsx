@@ -29,17 +29,21 @@ const ProfileBar = ({
   const dispatch = useDispatch();
   const mode = useAppSelector((state) => state.mode.ModeState);
   return (
-    <div>
+    <div className="border border-gray-500 ">
       <ProfileModal email={userEmail} profilePhoto={profilePhoto} bio={bio} />
       <div className="bg-[url('/background-profile.png')] h-[250px] w-full relative bg-no-repeat bg-cover">
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-60"></div>
       </div>
       <div
-        className={`w-full bg-gray-100 flex space-x-[4rem] mx-auto space-center  ${
+        className={`w-full bg-gray-100 flex  mx-auto space-center  ${
           mode ? "bg-gray-900 text-white " : "bg-white"
         }`}
       >
-        <div className="-mt-[80px]  w-[30%] border-r border-gray-500  text-center">
+        <div
+          className={`-mt-[80px]  w-[30%] border-r border-gray-500  text-center ${
+            mode ? "bg-gray-900" : "bg-white"
+          }`}
+        >
           <Image
             priority
             src={
@@ -62,7 +66,11 @@ const ProfileBar = ({
             </button>
           </div>
         </div>
-        <div className="flex-1 w-[70%]  px-4 items-center flex justify-around ">
+        <div
+          className={`flex-1 w-[70%]  px-4 items-center flex justify-around  ${
+            mode ? "bg-gray-900" : "bg-white"
+          }`}
+        >
           <div className="flex flex-col  items-center space-y-2">
             <h1 className="text-3xl font-bold ">{followers}</h1>
             <span>Followers</span>

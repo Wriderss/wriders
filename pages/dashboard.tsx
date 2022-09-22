@@ -48,7 +48,7 @@ const Dashboard = () => {
       <Toaster />
       {/* Main-content */}
       <div
-        className={`flex-1 md:ml-[50px] ml-[12vw] md:w-full w-[90vw] overflow-y-hidden ${
+        className={`flex-1 md:ml-[50px] ml-[12vw] min-h-screen md:w-full w-[90vw] overflow-y-hidden ${
           mode ? "bg-gray-900" : "bg-white"
         }`}
       >
