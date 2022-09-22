@@ -6,8 +6,10 @@ import ProfileBar from "../components/Profile/ProfileBar";
 import YourArticle from "../components/Blog/YourArticle";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebase";
+import { useAppSelector } from "../app/hooks";
 
 const profile = () => {
+  const mode = useAppSelector((state) => state.mode.ModeState);
   const [user, loading, error] = useAuthState(auth);
   const [userDetails, setUserDetails] = useState<any>([]);
   const email = user?.email;
@@ -36,14 +38,18 @@ const profile = () => {
       </Head>
 
       <Sidebar />
-      <div className="md:ml-[50px] ml-[15vw] md:w-full  flex-1  w-[90vw]  ">
+      <div
+        className={`md:ml-[50px] ml-[15vw] md:w-full  flex-1  w-[90vw]  ${
+          mode ? "bg-gray-900" : "bg-white"
+        }`}
+      >
         <Header
           title={"Profile"}
           name={userDetails?.name}
           email={userDetails?.email}
           profilePhoto={userDetails?.profilePhoto}
         />
-        <div className="ml-[4rem] w-[90%] mx-auto">
+        <div className={`ml-[4rem] w-[90%] mx-auto`}>
           <ProfileBar
             userEmail={userDetails?.email}
             profilePhoto={userDetails?.profilePhoto}

@@ -8,11 +8,13 @@ import { auth } from "../lib/firebase";
 import Login from "./login";
 import { Toaster } from "react-hot-toast";
 import Loading from "../components/loading/Loading";
+import { useAppSelector } from "../app/hooks";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
   const email = user?.email;
   const [userDetails, setUserDetails] = useState<any>([]);
+  const mode = useAppSelector((state) => state.mode.ModeState);
 
   const getUserDetails = async () => {
     if (!email) return;
@@ -45,7 +47,11 @@ const Dashboard = () => {
       <Sidebar />
       <Toaster />
       {/* Main-content */}
-      <div className="flex-1 md:ml-[50px] ml-[12vw] md:w-full w-[90vw] overflow-y-hidden">
+      <div
+        className={`flex-1 md:ml-[50px] ml-[12vw] md:w-full w-[90vw] overflow-y-hidden ${
+          mode ? "bg-gray-900" : "bg-white"
+        }`}
+      >
         <Header
           title="Home"
           name={userDetails?.name}

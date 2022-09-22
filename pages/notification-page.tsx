@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Toaster } from "react-hot-toast";
+import { useAppSelector } from "../app/hooks";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import { auth } from "../lib/firebase";
@@ -18,6 +19,7 @@ type UserResponse = {
 
 const NotificationPage: NextPage = () => {
   const [user, loading] = useAuthState(auth);
+  const mode = useAppSelector((state) => state.mode.ModeState);
   const router = useRouter();
   const [userDetails, setUserDetails] = useState<any>([]);
   const [userUpdates, setUserUpdates] = useState<any>([]);
@@ -61,7 +63,11 @@ const NotificationPage: NextPage = () => {
       </Head>
       <Sidebar />
       <Toaster />
-      <div className="flex-1 md:ml-[50px] ml-[12vw] md:w-full w-[90vw] overflow-y-hidden">
+      <div
+        className={`flex-1 md:ml-[50px] ml-[12vw] min-h-screen md:w-full w-[90vw] overflow-y-hidden ${
+          mode ? "bg-gray-900" : "bg-white"
+        }`}
+      >
         <Header
           title="Notifications"
           name={userDetails?.name}
@@ -73,7 +79,11 @@ const NotificationPage: NextPage = () => {
             <div
               key={index}
               onClick={() => router.push(`/${updates.slug}`)}
-              className="h-auto cursor-pointer flex space-x-4 bg-gray-100 items-center p-2 w-full hover:bg-gray-200 rounded-md"
+              className={`h-auto cursor-pointer flex space-x-4  items-center p-2 w-full hover:bg-gray-200 rounded-md ${
+                mode
+                  ? "bg-gray-800 text-white hover:bg-gray-700"
+                  : "bg-gray-200 text-black hover:bg-gray-200"
+              }`}
             >
               <div className="relative h-[200px] w-[250px] ">
                 <Image

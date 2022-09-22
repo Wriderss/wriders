@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
+import { useAppSelector } from "../../app/hooks";
 import { auth } from "../../lib/firebase";
 import { modalOpen } from "../../slices/modalSlice";
 import ProfileModal from "./updateProfileModal";
@@ -26,14 +27,19 @@ const ProfileBar = ({
   blog,
 }: profileType) => {
   const dispatch = useDispatch();
+  const mode = useAppSelector((state) => state.mode.ModeState);
   return (
     <div>
       <ProfileModal email={userEmail} profilePhoto={profilePhoto} bio={bio} />
       <div className="bg-[url('/background-profile.png')] h-[250px] w-full relative bg-no-repeat bg-cover">
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-60"></div>
       </div>
-      <div className="w-full bg-gray-100 flex space-x-[4rem] mx-auto space-center ">
-        <div className="-mt-[80px]  w-[30%] border-r border-black  text-center">
+      <div
+        className={`w-full bg-gray-100 flex space-x-[4rem] mx-auto space-center  ${
+          mode ? "bg-gray-900 text-white " : "bg-white"
+        }`}
+      >
+        <div className="-mt-[80px]  w-[30%] border-r border-gray-500  text-center">
           <Image
             priority
             src={

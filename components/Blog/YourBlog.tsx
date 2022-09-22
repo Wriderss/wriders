@@ -6,14 +6,18 @@ import {
   HeartIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import { useAppSelector } from "../../app/hooks";
 
 const YourBlog = ({ heading, image, likes, slug }: any) => {
   const router = useRouter();
+  const mode = useAppSelector((state) => state.mode.ModeState);
 
   return (
     <div
       onClick={() => router.push(`/${slug}`)}
-      className="cursor-pointer hover:bg-gray-200 w-[350px] flex flex-col  min-h-[300px] rounded-md border "
+      className={`cursor-pointer ${
+        mode ? "hover:bg-gray-800" : "hover:bg-gray-200"
+      } w-[350px] flex flex-col  min-h-[300px] rounded-md border `}
     >
       <h1 className="p-2 font-semibold text-lg ">{heading}</h1>
       <div className="flex flex-1 justify-center h-[300px] w-[350px] bg-gray-200 relative">

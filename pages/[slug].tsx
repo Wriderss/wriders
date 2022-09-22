@@ -9,12 +9,14 @@ import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebase";
 import { Toaster } from "react-hot-toast";
+import { useAppSelector } from "../app/hooks";
 
 type slug_type = {
   slug: string;
 };
 
 const blog = () => {
+  const mode = useAppSelector((state) => state.mode.ModeState);
   const [user] = useAuthState(auth);
   const email = user?.email;
   const router = useRouter();
@@ -82,7 +84,11 @@ const blog = () => {
         <title>Wrider | {slug}</title>
       </Head>
       <Sidebar />
-      <div className="md:ml-[50px] ml-[15vw] md:w-full  flex-1  w-[90vw]  ">
+      <div
+        className={`md:ml-[50px] ml-[15vw] md:w-full  flex-1  w-[90vw]  ${
+          mode ? "bg-gray-900" : "bg-white"
+        } `}
+      >
         <Header
           title={"Home"}
           name={userDetails?.name}

@@ -11,6 +11,7 @@ import {
   HeartIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
+import { useAppSelector } from "../../app/hooks";
 
 type blog_type = {
   username: string;
@@ -34,15 +35,22 @@ const Blog = ({
   views,
 }: blog_type) => {
   const router = useRouter();
+  const mode = useAppSelector((state) => state.mode.ModeState);
   return (
     <div
       onClick={() => router.push(`/${slug}`)}
-      className="flex flex-col min-h-[300px] cursor-pointer hover:bg-gray-100  bg-white py-2 shadow-lg rounded-md"
+      className={`flex flex-col min-h-[300px] cursor-pointer   p-2 shadow-lg rounded-md ${
+        mode
+          ? "bg-gray-800 hover:bg-gray-700 text-white"
+          : "bg-white hover:bg-gray-100 text-gray-900"
+      } `}
     >
       <div className="px-2">
         <h1 className="capitalize font-semibold text-lg">{heading}</h1>
       </div>
-      <div className="flex-1 flex relative h-[300px] w-[350px] bg-gray-200  justify-center">
+      <div
+        className={`flex-1 flex relative h-[300px] w-[350px] bg-gray-200  justify-center`}
+      >
         <Image src={image} alt={heading} layout="fill" />
       </div>
       <div className="flex justify-between items-center p-1">

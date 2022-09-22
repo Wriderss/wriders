@@ -23,6 +23,7 @@ type blog_type = {
 };
 
 const BlogSection = ({ title }: blog_title) => {
+  const mode = useAppSelector((state) => state.mode.ModeState);
   const [user] = useAuthState(auth);
   const [blogs, setBlogs] = useState<blog_type[]>([]);
   async function getBlogs() {
@@ -40,7 +41,13 @@ const BlogSection = ({ title }: blog_title) => {
   }, [user]);
   return (
     <div className="w-[90%]  mx-auto my-4 p-2  ">
-      <h1 className="text-3xl font-bold py-2">{title}</h1>
+      <h1
+        className={`${
+          mode ? "text-white" : "text-gray-900"
+        } text-3xl font-bold `}
+      >
+        {title}
+      </h1>
       <div className="grid  p-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1  h-max gap-4">
         {blogs.map((blog) => (
           <Blog

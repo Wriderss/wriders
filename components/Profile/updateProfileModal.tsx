@@ -19,11 +19,9 @@ export default function ProfileModal({ email, profilePhoto, bio }: any) {
   const [selectedImage, setSelectedImage] = useState<string | null>(
     profilePhoto
   );
-  const [loading, setLoading] = useState<boolean>(false);
 
   const updateProfile = async () => {
     if (!selectedImage) {
-      setLoading(true);
       console.log("hello there.");
       const response = await fetch("/api/updateProfile", {
         method: "POST",
@@ -36,16 +34,13 @@ export default function ProfileModal({ email, profilePhoto, bio }: any) {
         }),
       })
         .then(() => {
-          setLoading(false);
           dispatch(modalClose());
         })
         .catch((e) => {
-          setLoading(false);
           dispatch(modalClose());
           console.log(e.message);
         });
     } else {
-      setLoading(true);
       const imageRef = ref(storage, `user/${email}/profilePhoto`);
       if (selectedImage) {
         await uploadString(imageRef, String(selectedImage), "data_url");
@@ -63,12 +58,9 @@ export default function ProfileModal({ email, profilePhoto, bio }: any) {
         }),
       })
         .then(() => {
-          setLoading(false);
-
           dispatch(modalClose());
         })
         .catch((e) => {
-          setLoading(false);
           dispatch(modalClose());
           console.log(e.message);
         });
@@ -105,7 +97,6 @@ export default function ProfileModal({ email, profilePhoto, bio }: any) {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            {loading && toast.loading("Updating the profile 🚀")}
             <Toaster />
 
             <div className="flex min-h-full items-center justify-center p-4 text-center">
