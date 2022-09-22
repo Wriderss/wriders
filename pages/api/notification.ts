@@ -28,6 +28,7 @@ async function getAllNotifications(req: NextApiRequest, res: NextApiResponse) {
             author: true,
             body: true,
           },
+          orderBy: { created_at: "desc" },
         },
         likes: {
           select: {

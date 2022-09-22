@@ -68,7 +68,7 @@ const NotificationPage: NextPage = () => {
           email={userDetails?.email}
           profilePhoto={userDetails?.profilePhoto}
         />
-        <div className="w-[90%]  mx-auto my-4 p-2 ">
+        <div className="w-[90%] flex flex-col space-y-4  mx-auto my-4 p-2 ">
           {userUpdates.map((updates: any, index: number) => (
             <div
               key={index}

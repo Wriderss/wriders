@@ -1,6 +1,6 @@
 # Work for Today - 
-1. Add a dark mode as well. 
-2. Add a view functionality.
+1. Add a dark mode as well. (next-step)
+2. Add a view functionality. (Brute Force - everytime someone clicks on the slug of the site we will launch an API call which will add user.email into the views modal and if the user.email already exists, it will do nothing.)
 3. Add a loading bar while editing the profile . (done)
 
 
@@ -8,3 +8,4 @@
 1. Add follower and following feature.
 2. Add tags into the blogs so that to differentiate them .
 3. Add a Favourite Section for blogs in the Application.
+4. Add a realtime data fetching .
