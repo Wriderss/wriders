@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  BookmarkIcon,
-  ChatBubbleBottomCenterIcon,
-  EllipsisHorizontalCircleIcon,
-} from "@heroicons/react/24/solid";
+import { EyeIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import {
   ChatBubbleBottomCenterTextIcon,
@@ -19,6 +15,7 @@ type blog_type = {
   slug: string;
   like: number;
   comments: any;
+  views: number;
 };
 
 const Blog = ({
@@ -29,6 +26,7 @@ const Blog = ({
   like,
   slug,
   comments,
+  views,
 }: blog_type) => {
   const router = useRouter();
   return (
@@ -55,6 +53,10 @@ const Blog = ({
           <div className="flex items-center space-x-2">
             <span className="font-semibold">{comments.length}</span>
             <ChatBubbleBottomCenterTextIcon height={20} width={20} />
+          </div>
+          <div className="flex items-center space-x-2">
+            <span className="font-semibold">{views}</span>
+            <EyeIcon height={20} width={20} />
           </div>
         </div>
       </div>

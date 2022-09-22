@@ -19,6 +19,7 @@ type blog_type = {
   author: any | string[];
   likes: any | string[];
   comment: any;
+  views: any | [];
 };
 
 const BlogSection = ({ title }: blog_title) => {
@@ -32,6 +33,7 @@ const BlogSection = ({ title }: blog_title) => {
       },
     });
     const data = await response.json();
+    console.log(data);
     setBlogs(data);
   }
   useEffect(() => {
@@ -54,6 +56,7 @@ const BlogSection = ({ title }: blog_title) => {
             }
             like={blog.likes.length}
             slug={blog.slug}
+            views={blog.views.length}
             comments={blog.comment}
           />
         ))}

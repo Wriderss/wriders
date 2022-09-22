@@ -47,10 +47,24 @@ const blog = () => {
     const userDetails = await resp.json();
     setUserDetails(userDetails);
   };
-
+  const IncrementViews = async () => {
+    const reponse = await fetch("/api/IncrementViews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, blogId: blog.id }),
+    });
+  };
   useEffect(() => {
     getDetails();
   }, [slug]);
+
+  useEffect(() => {
+    IncrementViews();
+    console.log("hit");
+  }, [email, blog.id]);
+
   useEffect(() => {
     getUserDetails();
   }, [user]);
