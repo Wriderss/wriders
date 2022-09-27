@@ -39,7 +39,7 @@ const Sidebar = () => {
           className="menu-item"
         />
         <HashtagIcon
-          onClick={() => toast.success("Coming Soon too..", { icon: "🔜" })}
+          onClick={() => router.push("/explore")}
           height={40}
           width={40}
           color={`${mode ? "white" : "black"}`}
