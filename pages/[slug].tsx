@@ -10,6 +10,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebase";
 import { Toaster } from "react-hot-toast";
 import { useAppSelector } from "../app/hooks";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../components/loading/Loading";
+import Login from "./login";
 
 type slug_type = {
   slug: string;
@@ -21,21 +24,8 @@ const blog = () => {
   const email = user?.email;
   const router = useRouter();
   const { slug } = router.query;
-  const [blog, setBlog] = useState<any>([]);
   const [userDetails, setUserDetails] = useState<any>([]);
-  async function getDetails() {
-    if (!slug) return;
-    const response = await fetch("/api/blogDetails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ slug: slug }),
-    });
-    const data = await response.json();
-    console.log(data);
-    setBlog(data);
-  }
+
   const getUserDetails = async () => {
     if (!email) return;
     const resp = await fetch("/api/userDetails", {
@@ -61,22 +51,36 @@ const blog = () => {
       body: JSON.stringify({ email, blogId }),
     });
     const data = await response.json();
-    console.log(data);
   };
-  useEffect(() => {
-    getDetails();
-  }, [slug]);
+
   useEffect(() => {
     getUserDetails();
   }, [user]);
+
+  const fetchBlog = async () => {
+    const response = await fetch("/api/blogDetails", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ slug: slug }),
+    });
+    return response.json();
+  };
+  const { data: blog, isLoading } = useQuery(["BlogData"], fetchBlog, {
+    enabled: router.isReady,
+  });
+  console.log(blog);
+
   useEffect(() => {
-    if (blog.id && email) {
+    if (blog?.id && email) {
       IncrementViews();
     } else {
       return;
     }
   }, [blog]);
-  if (!user) return <div>Loading...</div>;
+  if (!user) return <Loading />;
+  if (isLoading) return <Loading />;
   return (
     <div className="flex">
       <Toaster />
@@ -97,17 +101,17 @@ const blog = () => {
         />
         <div className="ml-[4rem] w-[90%] mx-auto">
           <BlogHeader
-            author={blog.author}
-            title={blog.title}
-            coverImage={blog.image}
-            created_at={blog.created_at}
-            body={blog.body}
+            author={blog?.author}
+            title={blog?.title}
+            coverImage={blog?.image}
+            created_at={blog?.created_at}
+            body={blog?.body}
           />
           <div className="flex justify-between mt-4">
             <MainBlog
-              title={blog.title}
-              body={blog.body}
-              blogId={blog.id}
+              title={blog?.title}
+              body={blog?.body}
+              blogId={blog?.id}
               userId={userDetails?.id}
               slug={slug}
             />

@@ -1,5 +1,4 @@
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import ProfileBar from "../components/Profile/ProfileBar";
@@ -7,29 +6,29 @@ import YourArticle from "../components/Blog/YourArticle";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../lib/firebase";
 import { useAppSelector } from "../app/hooks";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../components/loading/Loading";
 
 const profile = () => {
   const mode = useAppSelector((state) => state.mode.ModeState);
-  const [user, loading, error] = useAuthState(auth);
-  const [userDetails, setUserDetails] = useState<any>([]);
+  const [user] = useAuthState(auth);
   const email = user?.email;
-  const getUserDetails = async () => {
-    if (!email) return;
-    const resp = await fetch("/api/userDetails", {
+  const fetchUserDataByEmail = async () => {
+    const response = await fetch("/api/userDetails", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-type": "application/json",
       },
       body: JSON.stringify({ email: email }),
     });
-
-    const userDetails = await resp.json();
-    setUserDetails(userDetails);
+    return response.json();
   };
-  useEffect(() => {
-    getUserDetails();
-  }, [user]);
-  if (!user) return <div>Loading...</div>;
+  const { data: userDetails, isLoading } = useQuery(
+    ["userData", email],
+    fetchUserDataByEmail,
+    { enabled: !!email }
+  );
+  if (isLoading) return <Loading />;
 
   return (
     <div className="flex ">
