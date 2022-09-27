@@ -37,7 +37,7 @@ const Dashboard = () => {
   return (
     <main className="flex">
       <Head>
-        <title>Wrider | Dashboard</title>
+        <title>Wride | Dashboard</title>
       </Head>
       {/* Sidebar */}
       <Sidebar />

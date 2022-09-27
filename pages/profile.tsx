@@ -33,7 +33,7 @@ const profile = () => {
   return (
     <div className="flex ">
       <Head>
-        <title>Wrider | John Doe</title>
+        <title>Wride | {userDetails?.name}</title>
       </Head>
 
       <Sidebar />
