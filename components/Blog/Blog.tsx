@@ -51,7 +51,7 @@ const Blog = ({
       <div
         className={`flex-1 flex relative h-[300px] w-[350px] bg-gray-200  justify-center`}
       >
-        <Image src={image} alt={heading} layout="fill" />
+        <Image priority src={image} alt={heading} layout="fill" />
       </div>
       <div className="flex justify-between items-center p-1">
         <div className="flex items-center space-x-2">

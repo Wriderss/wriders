@@ -9,35 +9,31 @@ import Login from "./login";
 import { Toaster } from "react-hot-toast";
 import Loading from "../components/loading/Loading";
 import { useAppSelector } from "../app/hooks";
+import { useQuery } from "@tanstack/react-query";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
-  const email = user?.email;
-  const [userDetails, setUserDetails] = useState<any>([]);
   const mode = useAppSelector((state) => state.mode.ModeState);
-
-  const getUserDetails = async () => {
-    if (!email) return;
-    const resp = await fetch("/api/userDetails", {
+  const fetchUserData = async () => {
+    const resposne = await fetch("/api/userDetails", {
+      headers: { "Content-type": "application/json" },
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email }),
+      body: JSON.stringify({ email: user?.email }),
     });
-
-    const userDetails = await resp.json();
-    setUserDetails(userDetails);
+    return resposne.json();
   };
+  const {
+    data: userDetails,
+    status,
+    isLoading,
+  } = useQuery(["userData"], fetchUserData);
 
-  useEffect(() => {
-    getUserDetails();
-  }, []);
+  if (isLoading) return <Loading />;
 
-  if (loading) return <Loading />;
   if (!user) {
     return <Login />;
   }
+
   return (
     <main className="flex">
       <Head>

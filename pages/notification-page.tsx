@@ -3,59 +3,54 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Toaster } from "react-hot-toast";
 import { useAppSelector } from "../app/hooks";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import { auth } from "../lib/firebase";
-
-type UserResponse = {
-  name: string;
-  email: string;
-  profilePhoto: string;
-};
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../components/loading/Loading";
 
 const NotificationPage: NextPage = () => {
   const [user, loading] = useAuthState(auth);
+  const email = user?.email;
   const mode = useAppSelector((state) => state.mode.ModeState);
   const router = useRouter();
-  const [userDetails, setUserDetails] = useState<any>([]);
-  const [userUpdates, setUserUpdates] = useState<any>([]);
-  const getUserDetails = async () => {
-    if (!user?.email) return;
-    const resp = await fetch("/api/userDetails", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: user.email }),
-    });
 
-    const userDetails = await resp.json();
-    setUserDetails(userDetails);
-  };
-  const getUserUpdates = async () => {
-    if (userDetails.length === 0) return;
-    const response = await fetch("api/notification", {
+  const getUserByEmail = async () => {
+    const response = await fetch("/api/userDetails", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ email: user?.email }),
+    });
+    return response.json();
+  };
+  const { data: userDetails, isLoading } = useQuery(
+    ["user", user?.email],
+    getUserByEmail,
+    { enabled: !!email }
+  );
+  const getUserDetailsById = async () => {
+    const response = await fetch("/api/notification", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
       },
       body: JSON.stringify({ authorId: userDetails?.id }),
     });
-    const data = await response.json();
-    setUserUpdates(data);
-    console.log(data);
+    return response.json();
   };
-  useEffect(() => {
-    getUserDetails();
-  }, [user]);
-  useEffect(() => {
-    getUserUpdates();
-  }, [userDetails]);
-  if (loading) return <h1>Loading</h1>;
+  const { data: userUpdates, isLoading: notificationLoading } = useQuery(
+    ["notification", userDetails?.id],
+    getUserDetailsById,
+    { enabled: !!userDetails?.id }
+  );
+
+  if (isLoading) return <Loading />;
+  if (notificationLoading) return <Loading />;
   return (
     <main className="flex">
       <Head>
