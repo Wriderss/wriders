@@ -8,6 +8,8 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { auth, storage } from "../lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import toast, { Toaster } from "react-hot-toast";
+import { v4 as uuid } from "uuid";
+import { useQuery } from "@tanstack/react-query";
 
 const writtingpage = () => {
   const [user] = useAuthState(auth);
@@ -40,6 +42,19 @@ const writtingpage = () => {
   const removeTag = (index: any) => {
     setTags(tags.filter((element, i) => i !== index));
   };
+  const fetchUserData = async () => {
+    const resposne = await fetch("/api/userDetails", {
+      headers: { "Content-type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ email: user?.email }),
+    });
+    return resposne.json();
+  };
+  const {
+    data: userDetails,
+    status,
+    isLoading,
+  } = useQuery(["userData"], fetchUserData);
   const handleBlogSubmit = async () => {
     if (loading) return;
     setLoading(true);
@@ -62,7 +77,7 @@ const writtingpage = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            slug: slug + Math.random() * (1000 - 1) + 1,
+            slug: slug + uuid(),
             title: ArticleHeading,
             body: ArticleBody,
             image: downloadUrl,
@@ -78,6 +93,7 @@ const writtingpage = () => {
       })
       .catch((e) => toast.error("Something went wrong"));
   };
+  console.log(slug + uuid());
   return (
     <div className="flex">
       <Head>
@@ -87,7 +103,12 @@ const writtingpage = () => {
       <Sidebar />
       <div className="flex-1 md:ml-[50px] ml-[12vw] md:w-full w-[90vw] overflow-y-hidden">
         <Toaster />
-        <Header title={"Blog"} />
+        <Header
+          title={"Blog"}
+          name={userDetails?.name}
+          email={userDetails?.email}
+          profilePhoto={userDetails?.profilePhoto}
+        />
 
         <div className="ml-[4rem] w-[90%] mx-auto border-2 border-gray-200  my-2">
           <div className="p-4">

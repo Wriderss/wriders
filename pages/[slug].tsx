@@ -24,6 +24,7 @@ const blog = () => {
   const email = user?.email;
   const router = useRouter();
   const { slug } = router.query;
+  console.log(slug);
   const [userDetails, setUserDetails] = useState<any>([]);
 
   const getUserDetails = async () => {
@@ -68,7 +69,7 @@ const blog = () => {
     return response.json();
   };
   const { data: blog, isLoading } = useQuery(["BlogData"], fetchBlog, {
-    enabled: router.isReady,
+    enabled: !!slug,
   });
   console.log(blog);
 

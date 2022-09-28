@@ -12,13 +12,14 @@ const BlogHeader = ({ author, title, coverImage, created_at, body }: any) => {
     const time = Math.ceil(words / wpm);
     return time;
   };
+  console.log(coverImage);
   return (
     <div
-      style={{ backgroundImage: `url(${coverImage})` }}
-      className={` flex items-center  h-[400px] bg-gray-500 bg-fixed w-full relative bg-no-repeat bg-cover`}
+      className={` flex items-center  h-max min-h-[400px] bg-gray-500 bg-fixed w-full  relative bg-no-repeat bg-cover`}
     >
-      <div className=" justify-center min-w-[400px] max-w-[500px]  ml-4 flex flex-col ">
-        <div className="-mt-[5rem] mx-auto z-[999]">
+      <Image src={coverImage} layout="fill" />
+      <div className=" justify-center min-w-[400px] max-w-[500px] my-[3rem]  ml-4 flex flex-col ">
+        <div className=" mx-auto z-[999]">
           <Image
             priority
             src={
@@ -26,17 +27,17 @@ const BlogHeader = ({ author, title, coverImage, created_at, body }: any) => {
                 ? author?.profilePhoto
                 : `https://avatars.dicebear.com/api/avataaars/${user?.email}.svg`
             }
-            height={150}
-            width={150}
+            height={100}
+            width={100}
             alt="user-img"
             className="rounded-full object-contain "
           />
         </div>
         <div className="relative bg-secondary-color  p-4 rounded-md shadow-md text-center -mt-[4rem] pt-[4rem]">
-          <h1 className="text-white font-semibold uppercase  text-2xl">
+          <h1 className="text-white font-semibold uppercase  text-xl">
             {title}
           </h1>
-          <div className="flex justify-around  items-center w-[70%] mx-auto pt-2 text-white">
+          <div className="flex justify-around capitalize  items-center w-[70%] mx-auto pt-2 text-white">
             {created_at && <span>{moment(created_at).fromNow()}</span>}
             <span className="bg-white h-[20px] w-[1px] " />{" "}
             {readingTime() && <span>{readingTime()} min read</span>}
