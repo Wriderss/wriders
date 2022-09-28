@@ -110,6 +110,7 @@ const Explore: NextPage = () => {
                   onClick={() => {
                     toast.success("Coming soon too.", { icon: "ℹ" });
                   }}
+
                   className="bg-secondary-color  rounded-md p-2 text-white text-[14px] cursor-pointer"
                 >
                   Check Profile
@@ -118,7 +119,9 @@ const Explore: NextPage = () => {
                   onClick={() => {
                     toast.success("Coming soon too.", { icon: "ℹ" });
                   }}
+
                   className="bg-secondary-color rounded-md p-2 text-white text-[14px] cursor-pointer px-4"
+
                 >
                   Follow
                 </button>
