@@ -122,6 +122,7 @@ const NotificationPage: NextPage = () => {
                 {userUpdates && (
                   <div className="my-2">
                     <h2 className="font-semibold ">Comments</h2>
+
                     {updates.comment.map(
                       ({ author, body }: any, index: number) => (
                         <div key={index} className="flex flex-col my-2 ">
