@@ -93,7 +93,7 @@ const writtingpage = () => {
       })
       .catch((e) => toast.error("Something went wrong"));
   };
-  console.log(slug + uuid());
+
   return (
     <div className="flex">
       <Head>

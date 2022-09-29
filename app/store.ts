@@ -1,11 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import tabReducer from "../slices/tabSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import modalReducer from "../slices/modalSlice";
 import modeReducer from "../slices/modeSlice";
 
 export const store = configureStore({
   reducer: {
-    tab: tabReducer,
     modal: modalReducer,
     mode: modeReducer,
   },
