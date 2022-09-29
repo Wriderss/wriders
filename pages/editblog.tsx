@@ -1,4 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
@@ -9,7 +10,7 @@ import Header from "../components/Header";
 import Loading from "../components/loading/Loading";
 import Sidebar from "../components/Sidebar";
 import { updateBlogBySlug } from "../hooks/editblog/EditBlog";
-import { auth } from "../lib/firebase";
+import { auth, storage } from "../lib/firebase";
 
 const EditBlog = () => {
   const router = useRouter();
@@ -69,6 +70,28 @@ const EditBlog = () => {
     { enabled: !!email }
   );
 
+  const updateBlogWithImage = async () => {
+    if (loading) return;
+    setLoading(true);
+    const imageRef = ref(storage, `blogs/${slug}/image`);
+    await uploadString(imageRef, String(selectedImage), "data_url")
+      .then(async () => {
+        console.log("here uploading image");
+        const downloadImageUrl = await getDownloadURL(imageRef);
+        mutate({
+          slug,
+          title: ArticleHeading,
+          body: ArticleBody,
+          image: downloadImageUrl,
+        });
+        console.log(downloadImageUrl);
+        console.log("running");
+        toast.success("Blog Updated.");
+        setLoading(false);
+      })
+      .catch((e) => console.log(e.message));
+  };
+
   useEffect(() => {
     setArticleBody(blogData?.body);
     setArticleHeading(blogData?.title);
@@ -108,7 +131,7 @@ const EditBlog = () => {
                 ref={ImagePickerRef}
                 onChange={(e) => addImageToBlog(e)}
               />
-              {loadingUpdatedData ? (
+              {loadingUpdatedData || loading ? (
                 <>
                   <span className="font-bold text-xl">Publishing 🚀</span>
                 </>
@@ -119,12 +142,17 @@ const EditBlog = () => {
               )}
               <button
                 onClick={() => {
-                  mutate({
-                    slug,
-                    title: ArticleHeading,
-                    body: ArticleBody,
-                    image: selectedImage,
-                  });
+                  if (selectedImage !== blogData.image) {
+                    updateBlogWithImage();
+                  } else {
+                    mutate({
+                      slug,
+                      title: ArticleHeading,
+                      body: ArticleBody,
+                      image: selectedImage,
+                    });
+                    toast.success("Blog Updated");
+                  }
                 }}
                 className="bg-secondary-color text-white text-[14px] py-2 px-4 rounded-sm"
               >
