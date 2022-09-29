@@ -14,6 +14,7 @@ import Loading from "../components/loading/Loading";
 import { PencilIcon } from "@heroicons/react/24/solid";
 
 const blog = () => {
+  //commit-change
   const mode = useAppSelector((state) => state.mode.ModeState);
   const [user] = useAuthState(auth);
   const email = user?.email;
