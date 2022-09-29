@@ -22,6 +22,8 @@ const blog = () => {
   const { slug } = router.query;
   const [isAuthor, setIsAuthor] = useState<boolean>(false);
 
+  const [userDetails, setUserDetails] = useState<any>([]);
+
   const fetchBlog = async () => {
     const response = await fetch("/api/blogDetails", {
       method: "POST",
@@ -62,6 +64,12 @@ const blog = () => {
     });
     return response.json();
   };
+
+  const { data: blog, isLoading } = useQuery(["BlogData"], fetchBlog, {
+    enabled: !!slug,
+  });
+  console.log(blog);
+
 
   const { data: IncrementedViews } = useQuery(
     ["increment-views", email, blog],
