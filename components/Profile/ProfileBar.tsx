@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../app/hooks";
+import { followUserByUserId } from "../../hooks/user/followUser";
 import { auth } from "../../lib/firebase";
 import { modalOpen } from "../../slices/modalSlice";
 import ProfileModal from "./updateProfileModal";
@@ -15,6 +16,8 @@ type profileType = {
   followers: number;
   following: number;
   blog: number;
+  yourProfile: boolean;
+  yourId?: string;
 };
 
 const ProfileBar = ({
@@ -25,8 +28,11 @@ const ProfileBar = ({
   followers,
   following,
   blog,
+  yourProfile,
+  yourId,
 }: profileType) => {
   const dispatch = useDispatch();
+  const { mutate, isLoading } = followUserByUserId();
   const mode = useAppSelector((state) => state.mode.ModeState);
   return (
     <div className="border border-gray-500 ">
@@ -58,12 +64,27 @@ const ProfileBar = ({
           <div className="flex p-2 px-4 flex-col space-y-2 text-center">
             <h1 className="font-bold text-xl">{userName}</h1>
             <p className="text-[15px]  text-center">{bio}</p>
-            <button
-              onClick={() => dispatch(modalOpen())}
-              className="bg-secondary-color my-2 text-white  w-max rounded-md cursor-pointer flex mx-auto p-2"
-            >
-              Edit Profile
-            </button>
+            {yourProfile ? (
+              <button
+                onClick={() => dispatch(modalOpen())}
+                className="bg-secondary-color my-2 text-white  w-max rounded-md cursor-pointer flex mx-auto p-2"
+              >
+                Edit Profile
+              </button>
+            ) : (
+              // <button
+              //   onClick={() =>
+              //     mutate({
+              //       followingId: userEmail,
+              //       followerId: yourId,
+              //     })
+              //   }
+              //   className="bg-secondary-color my-2 text-white  w-max rounded-md cursor-pointer flex mx-auto p-2"
+              // >
+              //   Follow
+              // </button>
+              <div></div>
+            )}
           </div>
         </div>
         <div

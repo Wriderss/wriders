@@ -50,6 +50,7 @@ const profile = () => {
         />
         <div className={`ml-[4rem] w-[90%] mx-auto`}>
           <ProfileBar
+            yourProfile={true}
             userEmail={userDetails?.email}
             profilePhoto={userDetails?.profilePhoto}
             userName={userDetails?.name}

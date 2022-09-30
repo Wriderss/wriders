@@ -70,7 +70,7 @@ const Explore: NextPage = () => {
       <Sidebar />
       <div
         className={`flex-1 md:ml-[50px] ml-[12vw] min-h-screen md:w-full w-[90vw] overflow-y-hidden ${
-          mode ? "bg-gray-900" : "bg-white"
+          mode ? "bg-gray-900 text-white" : "bg-white"
         }`}
       >
         <Header
@@ -85,7 +85,9 @@ const Explore: NextPage = () => {
           {allUsers.map((user: user_prop) => (
             <div
               key={user.id}
-              className="border border-black  w-[300px] p-2 flex flex-col text-center"
+              className={` ${
+                mode ? " bg-gray-800 " : " border border-gray-900"
+              } w-[300px] rounded-md shadow-md p-2 py-8 flex flex-col text-center`}
             >
               <Image
                 src={
@@ -99,24 +101,24 @@ const Explore: NextPage = () => {
               />
               <h4 className="font-bold text-xl mt-1">{user.name}</h4>
 
-              <p className="font-semibold mx-2">
+              <p className="font-semibold  truncate mx-2">
                 {user.bio ? user.bio : "......"}
               </p>
-              <span className="text-[14px] text-gray-900 my-1">
+              <span className="text-[14px]  my-1">
                 Blog's written: {user.blog.length}
               </span>
               <div className="flex space-x-4 justify-center mb-2">
-                <span className="text-gray-800 text-[14px]">
-                  Followers:{user.follower?.length}
+                <span className=" text-[14px]">
+                  Followers : {user.follower?.length}
                 </span>
-                <span className="text-gray-800 text-[14px]">
-                  Following:{user.following?.length}
+                <span className=" text-[14px]">
+                  Following : {user.following?.length}
                 </span>
               </div>
               <div className="flex justify-center space-x-4">
                 <button
                   onClick={() => {
-                    router.push(`/user/${user.id}`);
+                    router.push(`/user/${user.email}`);
                   }}
                   className="bg-secondary-color  rounded-md p-2 text-white text-[14px] cursor-pointer"
                 >
