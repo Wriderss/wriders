@@ -9,6 +9,8 @@ import Header from "../components/Header";
 import Loading from "../components/loading/Loading";
 import Image from "next/image";
 import { toast, Toaster } from "react-hot-toast";
+import { followUserByUserId } from "../hooks/user/followUser";
+import { Router, useRouter } from "next/router";
 
 type user_prop = {
   id: string;
@@ -25,6 +27,12 @@ const Explore: NextPage = () => {
   const mode = useAppSelector((state) => state.mode.ModeState);
   const [user] = useAuthState(auth);
   const email = user?.email;
+  const router = useRouter();
+  const {
+    mutate,
+    isLoading: followUserLoading,
+    isSuccess,
+  } = followUserByUserId();
 
   const getUserByEmail = async () => {
     const response = await fetch("/api/userDetails", {
@@ -108,7 +116,7 @@ const Explore: NextPage = () => {
               <div className="flex justify-center space-x-4">
                 <button
                   onClick={() => {
-                    toast.success("Coming soon too.", { icon: "ℹ" });
+                    router.push(`/user/${user.id}`);
                   }}
                   className="bg-secondary-color  rounded-md p-2 text-white text-[14px] cursor-pointer"
                 >
@@ -116,7 +124,15 @@ const Explore: NextPage = () => {
                 </button>
                 <button
                   onClick={() => {
-                    toast.success("Coming soon too.", { icon: "ℹ" });
+                    if (user.id === userDetails.id) {
+                      toast.error("You can't follow your own self");
+                    } else {
+                      mutate({
+                        followingId: userDetails.id,
+                        followerId: user.id,
+                      });
+                      toast.success(`Following ${user.name}`);
+                    }
                   }}
                   className="bg-secondary-color rounded-md p-2 text-white text-[14px] cursor-pointer px-4"
                 >
