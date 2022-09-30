@@ -90,7 +90,7 @@ const Explore: NextPage = () => {
                 className="object-contain rounded-full"
               />
               <h4 className="font-bold text-xl mt-1">{user.name}</h4>
-              <span className="text-[12px] text-gray-600">{user.email}</span>
+
               <p className="font-semibold mx-2">
                 {user.bio ? user.bio : "......"}
               </p>
