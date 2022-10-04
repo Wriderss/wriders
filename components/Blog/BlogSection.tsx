@@ -40,7 +40,7 @@ const BlogSection = ({ title }: blog_title) => {
     getBlogs();
   }, [user]);
   return (
-    <div className="w-[90%]  mx-auto my-4 p-2  ">
+    <div className="md:w-[90%]  w-[95%] mx-auto my-4 p-2  ">
       <h1
         className={`${
           mode ? "text-white" : "text-gray-900"
@@ -48,7 +48,7 @@ const BlogSection = ({ title }: blog_title) => {
       >
         {title}
       </h1>
-      <div className="grid  p-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1  h-max gap-4">
+      <div className="grid  p-4  xl:grid-cols-3 md:grid-cols-2 grid-cols-1  h-max xl:gap-4 gap-2">
         {blogs.map((blog) => (
           <Blog
             username={blog.author.name}

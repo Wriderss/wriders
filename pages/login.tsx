@@ -5,10 +5,12 @@ import Head from "next/head";
 import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  signInWithPopup,
 } from "firebase/auth";
-import { auth } from "../lib/firebase";
+import { auth, provider } from "../lib/firebase";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Login = () => {
   const router = useRouter();
@@ -26,6 +28,19 @@ const Login = () => {
         toast.error("Something went wrong");
       });
     router.push("/");
+  };
+  const handleLoginWithGoogle = async (e: any) => {
+    e.preventDefault();
+    await signInWithPopup(auth, provider).then(async (result) => {
+      const name = result.user.displayName;
+      const email = result.user.email;
+      const profilePhoto = result.user.photoURL;
+      await fetch("/api/googleAuthUser", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ name, email, profilePhoto }),
+      });
+    });
   };
   return (
     <div>
@@ -128,6 +143,23 @@ const Login = () => {
                     </span>
                   </p>
                 </div>
+                <div className="flex justify-center items-center space-x-2">
+                  <div className="h-[0.7px] w-[40%] bg-black" />
+                  <span>or</span>
+                  <div className="h-[.7px] w-[40%] bg-black" />
+                </div>
+                <button
+                  onClick={(e) => handleLoginWithGoogle(e)}
+                  className="flex bg-secondary-color text-white p-2 rounded-md w-[60%] mx-auto items-center space-x-4 justify-center"
+                >
+                  <Image
+                    src="/google.svg"
+                    alt="google-logo"
+                    height={20}
+                    width={20}
+                  />
+                  <span>Continue with google</span>
+                </button>
               </form>
             </div>
           </div>

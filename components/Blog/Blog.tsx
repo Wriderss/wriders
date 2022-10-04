@@ -39,7 +39,7 @@ const Blog = ({
   return (
     <div
       onClick={() => router.push(`/${slug}`)}
-      className={`flex flex-col min-h-[300px] cursor-pointer   p-2 shadow-lg rounded-md ${
+      className={`flex flex-col min-h-[300px]  cursor-pointer   p-2 shadow-lg rounded-md ${
         mode
           ? "bg-gray-800 hover:bg-gray-700 text-white"
           : "bg-white hover:bg-gray-100 text-gray-900"
@@ -49,7 +49,7 @@ const Blog = ({
         <h1 className="capitalize font-semibold text-lg">{heading}</h1>
       </div>
       <div
-        className={`flex-1 flex relative h-[300px] w-[350px] bg-gray-200  justify-center`}
+        className={`flex-1 flex relative h-[300px] lg:w-[350px] w-full bg-gray-500 items-center mx-auto justify-center`}
       >
         <Image priority src={image} alt={heading} layout="fill" />
       </div>

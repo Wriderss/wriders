@@ -6,8 +6,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      sans: ["'Poppins', sans-serif"],
-      mono: ["Alegreya Sans SC"],
+      sans: ["'Roboto', sans-serif"],
+      mono: ["'Roboto', sans-serif"],
     },
     extend: {
       colors: {

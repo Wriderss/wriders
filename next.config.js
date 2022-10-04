@@ -4,8 +4,7 @@ module.exports = {
     domains: [
       "avatars.dicebear.com",
       "firebasestorage.googleapis.com",
-      "www.nasa.gov",
-      "vastphotos.com",
+      "lh3.googleusercontent.com",
     ],
   },
 };
