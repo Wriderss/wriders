@@ -48,10 +48,8 @@ const Blog = ({
       <div className="px-2">
         <h1 className="capitalize font-semibold text-lg">{heading}</h1>
       </div>
-      <div
-        className={`flex-1 flex relative h-[300px] lg:w-[350px] w-full bg-gray-500 items-center mx-auto justify-center`}
-      >
-        <Image priority src={image} alt={heading} layout="fill" />
+      <div className="relative h-full">
+        <Image src={image} alt={heading} layout="fill" />
       </div>
       <div className="flex justify-between items-center p-1">
         <div className="flex items-center space-x-2">

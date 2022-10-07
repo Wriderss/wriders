@@ -23,7 +23,7 @@ const MainBlog = ({ title, body, slug, userId, blogId }: any) => {
     });
     const { data } = await checkLike.json();
     const userLiked = data.filter((like: any) => like.userId === userId);
-    if (userLiked.length === 1) {
+    if (userLiked.length >= 1) {
       setLiked(true);
     } else {
       setLiked(false);

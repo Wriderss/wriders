@@ -9,7 +9,17 @@ export default async function handler(
     case "POST": {
       return followUserById(req, res);
     }
+    case "GET": {
+      return allFollowData(req, res);
+    }
   }
+}
+
+async function allFollowData(req: NextApiRequest, res: NextApiResponse) {
+  await prisma.follows
+    .findMany({})
+    .then((data) => res.status(200).json(data))
+    .catch((e) => res.json(e.message));
 }
 
 async function followUserById(req: NextApiRequest, res: NextApiResponse) {

@@ -12,7 +12,6 @@ const BlogHeader = ({ author, title, coverImage, created_at, body }: any) => {
     const time = Math.ceil(words / wpm);
     return time;
   };
-  console.log(coverImage);
   return (
     <div
       className={` flex items-center  h-max min-h-[400px] bg-gray-500 bg-fixed w-full  relative bg-no-repeat bg-cover`}

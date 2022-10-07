@@ -64,7 +64,6 @@ const blog = () => {
   const { data: blog, isLoading } = useQuery(["BlogData"], fetchBlog, {
     enabled: !!slug,
   });
-  console.log(blog);
 
   const { data: IncrementedViews } = useQuery(
     ["increment-views", email, blog],
