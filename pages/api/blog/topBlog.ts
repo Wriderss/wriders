@@ -1,6 +1,6 @@
-import { prisma } from "../../prisma/prisma";
+import { prisma } from "../../../prisma/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
-import { ResponseType } from "../../interfaces";
+import { ResponseType } from "../../../interfaces";
 
 export default async function handler(
   req: NextApiRequest,
@@ -20,7 +20,12 @@ async function getAllBlogs(req: NextApiRequest, res: NextApiResponse) {
   await prisma.blog
     .findMany({
       include: { author: true, likes: true, comment: true, views: true },
-      orderBy: { created_at: "desc" },
+      orderBy: {
+        views: {
+          _count: "desc",
+        },
+      },
+      take: 6,
     })
     .then((data) => {
       res.status(200).json(data);
