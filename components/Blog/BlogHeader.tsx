@@ -40,7 +40,7 @@ const BlogHeader = ({ author, title, coverImage, created_at, body }: any) => {
       className={` flex items-center  h-max min-h-[400px] bg-gray-500 bg-fixed w-full  relative bg-no-repeat bg-cover`}
     >
       <Image src={coverImage} layout="fill" />
-      {isSuccess && toast.success("Email Added for notifications")}
+      {isSuccess && toast.success("Still on Development.")}
 
       <div className=" justify-center min-w-[400px] max-w-[400px] my-[3rem]  ml-4 flex flex-col ">
         <div className=" mx-auto z-[999]">
