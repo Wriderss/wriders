@@ -14,7 +14,7 @@ export default async function handler(
 
 async function getAllPostById(req: NextApiRequest, res: NextApiResponse) {
   const { email, userId } = req.body;
-  await prisma?.newsletter
+  await prisma.newsletter
     .findMany({
       where: {
         email,
