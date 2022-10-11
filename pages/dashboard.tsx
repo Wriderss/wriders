@@ -54,7 +54,8 @@ const Dashboard = () => {
           email={userDetails?.email}
           profilePhoto={userDetails?.profilePhoto}
         />
-        <BlogSection title={"Latest Article"} />
+        <BlogSection title={"Top  Articles"} fetchDataType={"top"} />
+        <BlogSection title={"Latest Article"} fetchDataType={"latest"} />
       </div>
     </main>
   );
