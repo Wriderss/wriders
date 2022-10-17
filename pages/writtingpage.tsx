@@ -10,6 +10,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import toast, { Toaster } from "react-hot-toast";
 import { v4 as uuid } from "uuid";
 import { useQuery } from "@tanstack/react-query";
+import sendMailNotification from "../components/Email/sendMail";
 
 const writtingpage = () => {
   const [user] = useAuthState(auth);
@@ -19,7 +20,7 @@ const writtingpage = () => {
   const [ArticleBody, SetArticleBody] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
-  const slug = ArticleHeading.replaceAll(" ", "-");
+  const slug = ArticleHeading.replaceAll(" ", "-").replaceAll("?", "");
   const [loading, setLoading] = useState<boolean>(false);
 
   const addImageToBlog = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +85,8 @@ const writtingpage = () => {
             authorId: data.id,
           }),
         });
+
+        sendMailNotification(data.id);
 
         setLoading(false);
         SetArticleBody("");

@@ -10,6 +10,8 @@ import { Toaster } from "react-hot-toast";
 import Loading from "../components/loading/Loading";
 import { useAppSelector } from "../app/hooks";
 import { useQuery } from "@tanstack/react-query";
+import { AddEmailNotification } from "../hooks/newsletter/newsletter";
+import sendMailNotification from "../components/Email/sendMail";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
