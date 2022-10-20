@@ -8,6 +8,7 @@ import { auth } from "../../lib/firebase";
 
 type blog_title = {
   title: string;
+  fetchDataType: string;
 };
 
 type blog_type = {
@@ -22,19 +23,31 @@ type blog_type = {
   views: [];
 };
 
-const BlogSection = ({ title }: blog_title) => {
+const BlogSection = ({ title, fetchDataType }: blog_title) => {
   const mode = useAppSelector((state) => state.mode.ModeState);
   const [user] = useAuthState(auth);
   const [blogs, setBlogs] = useState<blog_type[]>([]);
   async function getBlogs() {
-    const response = await fetch("/api/blogs", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    setBlogs(data);
+    if (fetchDataType === "top") {
+      const response = await fetch("/api/blog/topBlog", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setBlogs(data);
+    }
+    if (fetchDataType === "latest") {
+      const response = await fetch("/api/blog/blogs", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setBlogs(data);
+    }
   }
   useEffect(() => {
     getBlogs();

@@ -21,6 +21,7 @@ const blog = () => {
   const router = useRouter();
   const { slug } = router.query;
   const [isAuthor, setIsAuthor] = useState<boolean>(false);
+  console.log(slug);
 
   const fetchBlog = async () => {
     const response = await fetch("/api/blogDetails", {
@@ -135,3 +136,5 @@ const blog = () => {
 };
 
 export default blog;
+
+// For the slug please remove any question mark from the title first as well as all '-' also.

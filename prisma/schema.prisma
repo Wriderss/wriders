@@ -10,17 +10,18 @@ datasource db {
 }
 
 model User {
-  id           String    @id @default(cuid())
-  name         String    @db.VarChar(255)
-  email        String    @unique @db.VarChar(255)
+  id           String       @id @default(cuid())
+  name         String       @db.VarChar(255)
+  email        String       @unique @db.VarChar(255)
   bio          String?
   profilePhoto String?
   blog         Blog[]
   Comment      Comment[]
   likes        Like[]
-  follower     Follows[] @relation("follower")
-  following    Follows[] @relation("following")
-  created_at   DateTime  @default(now())
+  newsletter   Newsletter[]
+  follower     Follows[]    @relation("follower")
+  following    Follows[]    @relation("following")
+  created_at   DateTime     @default(now())
 }
 
 model Follows {
@@ -81,4 +82,14 @@ model View {
   email      String
   blog       Blog     @relation(references: [id], fields: [blogId], onDelete: Cascade)
   blogId     String
+}
+
+model Newsletter {
+  id         String   @id @default(cuid())
+  email      String
+  created_at DateTime @default(now())
+  User       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+
+  @@unique([email, userId])
 }
