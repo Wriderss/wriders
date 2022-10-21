@@ -39,7 +39,7 @@ const Blog = ({
   return (
     <div
       onClick={() => router.push(`/${slug}`)}
-      className={`flex flex-col min-h-[300px]  cursor-pointer   p-2 shadow-lg rounded-md ${
+      className={`flex flex-col min-h-[300px]  min-w-[350px] cursor-pointer   p-2 shadow-lg rounded-md ${
         mode
           ? "bg-gray-800 hover:bg-gray-700 text-white"
           : "bg-white hover:bg-gray-100 text-gray-900"
