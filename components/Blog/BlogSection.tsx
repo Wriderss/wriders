@@ -25,6 +25,10 @@ type blog_type = {
   views: [];
 };
 
+type blogArrayType = {
+  follower: [];
+};
+
 const BlogSection = ({ title, fetchDataType, userId }: blog_title) => {
   const mode = useAppSelector((state) => state.mode.ModeState);
   const [user] = useAuthState(auth);
@@ -59,9 +63,23 @@ const BlogSection = ({ title, fetchDataType, userId }: blog_title) => {
         },
       });
       const data = await response.json();
-      console.log(data);
-      setBlogs(data.following[0]?.follower?.blog);
-      console.log(data.following[0]?.follower?.blog);
+      const recommended_list: any = [];
+      const clutter_list: any = [];
+      const clutter_bin: any = [];
+      // console.log(data.following[0]);
+      data.following.map((blogArray: blogArrayType) =>
+        clutter_list.push(blogArray)
+      );
+      console.log(clutter_list);
+
+      clutter_list.map((element: any) => {
+        element.follower.blog.map((blog) => recommended_list.push(blog));
+      });
+      setBlogs(recommended_list);
+
+      // console.log(recommended_list);
+      // setBlogs(data.following[0]?.follower?.blog);
+      // console.log(data.following[0]?.follower?.blog);
     }
   }
   useEffect(() => {
