@@ -56,6 +56,11 @@ const Dashboard = () => {
         />
         <BlogSection title={"Top  Articles"} fetchDataType={"top"} />
         <BlogSection title={"Latest Article"} fetchDataType={"latest"} />
+        <BlogSection
+          title={"Recommended For You"}
+          fetchDataType={"Recommended"}
+          userId={userDetails?.id}
+        />
       </div>
     </main>
   );
