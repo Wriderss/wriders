@@ -73,7 +73,7 @@ const BlogSection = ({ title, fetchDataType, userId }: blog_title) => {
       console.log(clutter_list);
 
       clutter_list.map((element: any) => {
-        element.follower.blog.map((blog) => recommended_list.push(blog));
+        element.follower.blog.map((blog: any) => recommended_list.push(blog));
       });
       setBlogs(recommended_list);
 
