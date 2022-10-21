@@ -59,9 +59,9 @@ const BlogSection = ({ title, fetchDataType, userId }: blog_title) => {
         },
       });
       const data = await response.json();
-      // setBlogs(data.follower);
-      setBlogs(data?.following[0]?.follower.blog);
-      console.log(data?.following[0]?.follower.blog);
+      console.log(data);
+      setBlogs(data.following[0]?.follower?.blog);
+      console.log(data.following[0]?.follower?.blog);
     }
   }
   useEffect(() => {
@@ -77,39 +77,45 @@ const BlogSection = ({ title, fetchDataType, userId }: blog_title) => {
         {title}
       </h1>
       {fetchDataType === "Recommended" ? (
-        <div
-          className={`flex  space-x-[2rem] overflow-x-scroll hide-scroll my-2 border border-gray-200 py-4 px-2  ${
-            mode ? "bg-gray-700 border-gray-600" : "bg-gray-200"
-          }`}
-        >
-          {blog.length === 0 ? (
-            <div className=" my-4 min-h-[300px] flex justify-center items-center w-max mx-auto">
+        <>
+          {blogs?.length >= 1 ? (
+            <div
+              className={`flex  space-x-[2rem] overflow-x-scroll hide-scroll my-2 border border-gray-200 py-4 px-2  ${
+                mode ? "bg-gray-700 border-gray-600" : "bg-gray-200"
+              }`}
+            >
+              <>
+                {blogs?.map((blog) => (
+                  <Blog
+                    username={blog.author.name}
+                    image={blog.image}
+                    key={blog.id}
+                    heading={blog.title}
+                    avatar={
+                      blog.author.profilePhoto
+                        ? blog.author.profilePhoto
+                        : `https://avatars.dicebear.com/api/avataaars/${user?.email}.svg`
+                    }
+                    like={blog.likes.length}
+                    slug={blog.slug}
+                    comments={blog.comment}
+                    views={blog.views.length}
+                  />
+                ))}
+              </>
+            </div>
+          ) : (
+            <div
+              className={`  ${
+                mode ? "bg-gray-700 border-gray-600" : "bg-gray-200"
+              } my-4 min-h-[300px]  flex justify-center items-center w-full mx-auto`}
+            >
               <h1 className=" text-2xl font-semibold">
                 Follow your favourite writer to make them feature here 🌟🌟
               </h1>
             </div>
-          ) : (
-            <>
-              {blogs?.map((blog) => (
-                <Blog
-                  username={blog.author.name}
-                  image={blog.image}
-                  key={blog.id}
-                  heading={blog.title}
-                  avatar={
-                    blog.author.profilePhoto
-                      ? blog.author.profilePhoto
-                      : `https://avatars.dicebear.com/api/avataaars/${user?.email}.svg`
-                  }
-                  like={blog.likes.length}
-                  slug={blog.slug}
-                  comments={blog.comment}
-                  views={blog.views.length}
-                />
-              ))}
-            </>
           )}
-        </div>
+        </>
       ) : (
         <div
           className={`flex space-x-[2rem] overflow-x-scroll hide-scroll my-2 border border-gray-100 py-4 px-2  ${
