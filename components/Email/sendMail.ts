@@ -26,8 +26,10 @@ function sendMailNotification(authorId: string) {
     secure: false,
     requireTLS: true,
     auth: {
-      user: "adityapainuli2004@gmail.com",
-      pass: "aditya7838",
+      // user: "adityapainuli2004@gmail.com",
+      // pass: "aditya7838",
+      user: process.env.EMAIL,
+      pass: process.env.EMAILPASS,
     },
   });
 
