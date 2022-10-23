@@ -140,7 +140,7 @@ const BlogSection = ({ title, fetchDataType, userId }: blog_title) => {
             mode ? "bg-gray-700 border-gray-600" : "bg-gray-200"
           }`}
         >
-          {blogs.map((blog) => (
+          {blogs?.map((blog) => (
             <Blog
               username={blog.author.name}
               image={blog.image}
