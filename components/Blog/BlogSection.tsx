@@ -6,6 +6,7 @@ import Blog from "./Blog";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
 import blog from "../../pages/[slug]";
+import Link from "next/link";
 
 type blog_title = {
   title: string;
@@ -123,7 +124,8 @@ const BlogSection = ({ title, fetchDataType, userId }: blog_title) => {
               </>
             </div>
           ) : (
-            <div
+            <Link
+              href={"/explore"}
               className={`  ${
                 mode ? "bg-gray-700 border-gray-600" : "bg-gray-200"
               } my-4 min-h-[300px]  flex justify-center items-center w-full mx-auto`}
@@ -131,7 +133,7 @@ const BlogSection = ({ title, fetchDataType, userId }: blog_title) => {
               <h1 className=" text-2xl font-semibold">
                 Follow your favourite writer to make them feature here 🌟🌟
               </h1>
-            </div>
+            </Link>
           )}
         </>
       ) : (
