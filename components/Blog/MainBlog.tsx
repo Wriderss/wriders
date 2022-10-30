@@ -76,7 +76,11 @@ const MainBlog = ({ title, body, slug, userId, blogId }: any) => {
         <h1 className="font-bold capitalize text-3xl">{title}</h1>
       </div>
       <div className="mt-4 w-[97%] mx-auto whitespace-pre-line">{body}</div>
-      <div className="fixed flex space-x-1 left-[45%] bottom-10 items-center bg-gray-200 rounded-lg shadow-md ">
+      <div
+        className={`fixed z-50 flex space-x-1 left-[45%] bottom-10 items-center ${
+          mode ? "bg-gray-800" : "bg-gray-200"
+        } rounded-lg shadow-lg `}
+      >
         <HandThumbUpIcon
           onClick={() => {
             if (liked) toast.success("You already liked this post.");
@@ -89,7 +93,7 @@ const MainBlog = ({ title, body, slug, userId, blogId }: any) => {
           cursor="pointer"
           className={` p-2 rounded-md ${
             liked
-              ? "bg-red-500 hover:bg-red-370 text-white"
+              ? "bg-red-500 hover:bg-red-400 text-white"
               : "bg-gray-200 hover:bg-gray-300 "
           }`}
         />
@@ -98,14 +102,18 @@ const MainBlog = ({ title, body, slug, userId, blogId }: any) => {
           height={37}
           width={37}
           cursor="pointer"
-          className="hover:bg-gray-300 p-2 rounded-md"
+          className={`${
+            mode ? "hover:bg-gray-700" : "bg-gray-300"
+          } p-2 rounded-md `}
         />
         <Link href={`whatsapp://send?text=https://wriders.vercel.app/${slug}`}>
           <ShareIcon
             height={37}
             width={37}
             cursor="pointer"
-            className="hover:bg-gray-300 p-2 rounded-md"
+            className={`${
+              mode ? "hover:bg-gray-700" : "bg-gray-300"
+            } p-2 rounded-md `}
           />
         </Link>
       </div>

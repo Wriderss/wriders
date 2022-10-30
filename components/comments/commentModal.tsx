@@ -19,6 +19,7 @@ const CommentModal = ({ blogId, userId }: commentType) => {
   const commentState = useSelector(
     (state: RootState) => state.commentState.CommentState
   );
+  const modeState = useSelector((state: RootState) => state.mode.ModeState);
   const dispatch = useAppDispatch();
   const [commentInput, setCommentInput] = useState<string>("");
   const [comments, setComments] = useState<any>([]);
@@ -63,14 +64,20 @@ const CommentModal = ({ blogId, userId }: commentType) => {
     getAllComments();
   }, [blogId, commentInput]);
   return (
-    <div className="fixed top-[4.4rem] right-0  flex flex-col justify-center items-center h-screen bg-gray-100  w-[35%]">
+    <div
+      className={`fixed top-[4.4rem] right-0  flex flex-col justify-center items-center h-screen ${
+        modeState ? "bg-gray-800" : "bg-gray-200"
+      } w-[35%]`}
+    >
       <div className="flex justify-between mt-4 w-full px-4  items-center">
         <h1 className="text-3xl  font-semibold">Comments</h1>
         <XMarkIcon
           onClick={() => dispatch(changeCommentState())}
           height={40}
           width={40}
-          className="hover:bg-gray-200 rounded-md p-2"
+          className={`${
+            modeState ? "hover:bg-gray-600" : "hover:bg-gray-200"
+          } rounded-md p-2`}
         />
       </div>
       <div className="w-[90%]   flex flex-col space-y-2">
@@ -79,7 +86,9 @@ const CommentModal = ({ blogId, userId }: commentType) => {
           onChange={(e) => setCommentInput(e.target.value)}
           cols={100}
           placeholder="Write your thoughts on this blog"
-          className="resize-none   bg-gray-200 outline-none my-4 rounded-md p-2 h-[100px]"
+          className={`resize-none   ${
+            modeState ? "bg-gray-600" : "bg-gray-300"
+          } outline-none my-4 rounded-md p-2 h-[100px]`}
         />
         <button
           onClick={() => {
