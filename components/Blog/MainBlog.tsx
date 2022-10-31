@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { HandThumbUpIcon } from "@heroicons/react/24/outline";
+import {
+  ChatBubbleBottomCenterIcon,
+  HandThumbUpIcon,
+} from "@heroicons/react/24/outline";
 import { ShareIcon } from "@heroicons/react/24/solid";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../lib/firebase";
 import Link from "next/link";
 import CommentSection from "../comments/CommentSection";
 import toast from "react-hot-toast";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useDispatch } from "react-redux";
+import { changeCommentState } from "../../slices/commentSlice";
+import CommentModal from "../comments/commentModal";
 
 const MainBlog = ({ title, body, slug, userId, blogId }: any) => {
   const [liked, setLiked] = useState<boolean>(false);
+  const commentState = useAppSelector(
+    (state) => state.commentState.CommentState
+  );
   const mode = useAppSelector((state) => state.mode.ModeState);
+  const dispatch = useAppDispatch();
   const [newLiked, setNewLiked] = useState([]);
   const checkingLike = async () => {
     const checkLike = await fetch("/api/checkLike", {
@@ -47,6 +57,7 @@ const MainBlog = ({ title, body, slug, userId, blogId }: any) => {
     <div
       className={`w-full mb-[2rem] ${mode ? "text-white" : "text-gray-900"}`}
     >
+      {commentState && <CommentModal userId={userId} blogId={blogId} />}
       <div className="flex items-center space-x-3">
         <div className="relative">
           <svg
@@ -65,31 +76,47 @@ const MainBlog = ({ title, body, slug, userId, blogId }: any) => {
         <h1 className="font-bold capitalize text-3xl">{title}</h1>
       </div>
       <div className="mt-4 w-[97%] mx-auto whitespace-pre-line">{body}</div>
-      <div className="flex  my-[2rem] space-x-4 justify-center">
-        <div
+      <div
+        className={`fixed z-50 flex space-x-1 left-[45%] bottom-10 items-center ${
+          mode ? "bg-gray-800" : "bg-gray-200"
+        } rounded-lg shadow-lg `}
+      >
+        <HandThumbUpIcon
           onClick={() => {
             if (liked) toast.success("You already liked this post.");
             else {
               handleLike();
             }
           }}
-          className={`flex space-x-4 p-2 cursor-pointer  bg-gray-200 rounded-md items-center ${
+          height={37}
+          width={37}
+          cursor="pointer"
+          className={` p-2 rounded-md ${
             liked
               ? "bg-red-500 hover:bg-red-400 text-white"
               : "bg-gray-200 hover:bg-gray-300 "
           }`}
-        >
-          <HandThumbUpIcon height={30} width={30} />
-          <span className="font-semibold">{liked ? "Liked" : "Like"} </span>
-        </div>
+        />
+        <ChatBubbleBottomCenterIcon
+          onClick={() => dispatch(changeCommentState())}
+          height={37}
+          width={37}
+          cursor="pointer"
+          className={`${
+            mode ? "hover:bg-gray-700" : "bg-gray-300"
+          } p-2 rounded-md `}
+        />
         <Link href={`whatsapp://send?text=https://wriders.vercel.app/${slug}`}>
-          <div className="flex space-x-4 p-2 cursor-pointer hover:bg-gray-300 bg-gray-200 rounded-md items-center">
-            <ShareIcon height={30} width={30} color="black" />
-            <span className={`font-semibold text-gray-900`}>Share</span>
-          </div>
+          <ShareIcon
+            height={37}
+            width={37}
+            cursor="pointer"
+            className={`${
+              mode ? "hover:bg-gray-700" : "bg-gray-300"
+            } p-2 rounded-md `}
+          />
         </Link>
       </div>
-      <CommentSection blogId={blogId} userId={userId} />
     </div>
   );
 };

@@ -12,16 +12,19 @@ import { useAppSelector } from "../app/hooks";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/loading/Loading";
 import { PencilIcon } from "@heroicons/react/24/solid";
+import CommentModal from "../components/comments/commentModal";
 
 const blog = () => {
   //commit-change
   const mode = useAppSelector((state) => state.mode.ModeState);
+  const commentState = useAppSelector(
+    (state) => state.commentState.CommentState
+  );
   const [user] = useAuthState(auth);
   const email = user?.email;
   const router = useRouter();
   const { slug } = router.query;
   const [isAuthor, setIsAuthor] = useState<boolean>(false);
-  console.log(slug);
 
   const fetchBlog = async () => {
     const response = await fetch("/api/blogDetails", {
