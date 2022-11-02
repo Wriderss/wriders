@@ -55,12 +55,13 @@ const Dashboard = () => {
           profilePhoto={userDetails?.profilePhoto}
         />
         <BlogSection title={"Top  Articles"} fetchDataType={"top"} />
-        <BlogSection title={"Latest Article"} fetchDataType={"latest"} />
+
         <BlogSection
           title={"Recommended For You"}
           fetchDataType={"Recommended"}
           userId={userDetails?.id}
         />
+        <BlogSection title={"Latest Article"} fetchDataType={"latest"} />
       </div>
     </main>
   );

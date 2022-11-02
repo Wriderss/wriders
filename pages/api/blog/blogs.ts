@@ -21,7 +21,6 @@ async function getAllBlogs(req: NextApiRequest, res: NextApiResponse) {
     .findMany({
       include: { author: true, likes: true, comment: true, views: true },
       orderBy: { created_at: "desc" },
-      take: 10,
     })
     .then((data) => {
       res.status(200).json(data);
