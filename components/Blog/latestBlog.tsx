@@ -53,7 +53,7 @@ const LatestBlogSection = ({ title, fetchDataType }: blogSection_type) => {
     getBlogs();
   }, [user]);
   return (
-    <div className="md:w-[90%]  w-[95%] mx-auto my-4 p-2  ">
+    <div className="md:w-[90%]  w-[95%] mx-auto my-4  ">
       <h1
         className={`${
           mode ? "text-white" : "text-gray-900"
@@ -61,7 +61,7 @@ const LatestBlogSection = ({ title, fetchDataType }: blogSection_type) => {
       >
         {title}
       </h1>
-      <div className="grid  p-4  xl:grid-cols-3 md:grid-cols-2 grid-cols-1  h-max xl:gap-4 gap-2">
+      <div className="grid  py-4  xl:grid-cols-3 md:grid-cols-2 grid-cols-1  h-max xl:gap-4 gap-2">
         {blogs.map((blog) => (
           <Blog
             username={blog.author.name}
