@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import Loading from "../components/loading/Loading";
 import { useAppSelector } from "../app/hooks";
 import { useQuery } from "@tanstack/react-query";
+import LatestBlogSection from "../components/Blog/latestBlog";
 
 const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
@@ -61,7 +62,7 @@ const Dashboard = () => {
           fetchDataType={"Recommended"}
           userId={userDetails?.id}
         />
-        <BlogSection title={"Latest Article"} fetchDataType={"latest"} />
+        <LatestBlogSection title={"Latest Article"} fetchDataType={"latest"} />
       </div>
     </main>
   );

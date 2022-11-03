@@ -77,10 +77,6 @@ const BlogSection = ({ title, fetchDataType, userId }: blog_title) => {
         element.follower.blog.map((blog: any) => recommended_list.push(blog));
       });
       setBlogs(recommended_list);
-
-      // console.log(recommended_list);
-      // setBlogs(data.following[0]?.follower?.blog);
-      // console.log(data.following[0]?.follower?.blog);
     }
   }
   useEffect(() => {
