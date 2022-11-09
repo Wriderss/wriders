@@ -119,7 +119,7 @@ const Login = () => {
                   }}
                   className="text-[#171717] text-[15px] text-right cursor-pointer hover:underline"
                 >
-                  Forget Password?
+                  Forgot Password?
                 </p>
                 <button
                   onClick={(e) => {
