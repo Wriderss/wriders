@@ -61,7 +61,7 @@ const LatestBlogSection = ({ title, fetchDataType }: blogSection_type) => {
       >
         {title}
       </h1>
-      <div className="grid  py-4  xl:grid-cols-3 md:grid-cols-2 grid-cols-1  h-max xl:gap-4 gap-2">
+      <div className="grid  py-4 2xl:grid-cols-4  xl:grid-cols-3 md:grid-cols-2 grid-cols-1  h-max xl:gap-4 gap-2">
         {blogs.map((blog) => (
           <Blog
             username={blog.author.name}
