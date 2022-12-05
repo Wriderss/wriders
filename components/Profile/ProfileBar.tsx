@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../app/hooks";
 import { followUserByUserId } from "../../hooks/user/followUser";
@@ -33,9 +35,11 @@ const ProfileBar = ({
 }: profileType) => {
   const dispatch = useDispatch();
   const { mutate, isLoading } = followUserByUserId();
+  const router = useRouter();
   const mode = useAppSelector((state) => state.mode.ModeState);
   return (
     <div className="border border-gray-500 ">
+      <Toaster />
       <ProfileModal email={userEmail} profilePhoto={profilePhoto} bio={bio} />
       <div className="bg-[url('/background-profile.png')] h-[250px] w-full relative bg-no-repeat bg-cover">
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-60"></div>
@@ -64,27 +68,40 @@ const ProfileBar = ({
           <div className="flex p-2 px-4 flex-col space-y-2 text-center">
             <h1 className="font-bold text-xl">{userName}</h1>
             <p className="text-[15px]  text-center">{bio}</p>
-            {yourProfile ? (
+            <div className="flex justify-evenly">
+              {yourProfile ? (
+                <button
+                  onClick={() => dispatch(modalOpen())}
+                  className="bg-secondary-color my-2 text-white  w-max rounded-md cursor-pointer flex mx-auto p-2"
+                >
+                  Edit Profile
+                </button>
+              ) : (
+                // <button
+                //   onClick={() =>
+                //     mutate({
+                //       followingId: userEmail,
+                //       followerId: yourId,
+                //     })
+                //   }
+                //   className="bg-secondary-color my-2 text-white  w-max rounded-md cursor-pointer flex mx-auto p-2"
+                // >
+                //   Follow
+                // </button>
+                <div></div>
+              )}
               <button
-                onClick={() => dispatch(modalOpen())}
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `https://www.wride.io/user/${userEmail}`
+                  );
+                  toast.success("Copied to clipboard", { icon: "📋" });
+                }}
                 className="bg-secondary-color my-2 text-white  w-max rounded-md cursor-pointer flex mx-auto p-2"
               >
-                Edit Profile
+                Share profile
               </button>
-            ) : (
-              // <button
-              //   onClick={() =>
-              //     mutate({
-              //       followingId: userEmail,
-              //       followerId: yourId,
-              //     })
-              //   }
-              //   className="bg-secondary-color my-2 text-white  w-max rounded-md cursor-pointer flex mx-auto p-2"
-              // >
-              //   Follow
-              // </button>
-              <div></div>
-            )}
+            </div>
           </div>
         </div>
         <div
