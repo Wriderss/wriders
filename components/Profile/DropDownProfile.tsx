@@ -2,6 +2,7 @@ import {
   ArrowRightOnRectangleIcon,
   Cog8ToothIcon,
   CurrencyDollarIcon,
+  UserIcon,
 } from "@heroicons/react/24/solid";
 import { signOut } from "firebase/auth";
 import Image from "next/image";
@@ -45,7 +46,6 @@ const DropDownProfile = ({ userEmail, profilePhoto, userName }: dropProps) => {
         )}
       </div>
 
-
       <div
         id="userDropdown"
         className={`${
@@ -76,6 +76,15 @@ const DropDownProfile = ({ userEmail, profilePhoto, userName }: dropProps) => {
             >
               <CurrencyDollarIcon className="h-5 w-5" />
               <span>Earnings</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="/profile"
+              className="flex items-center space-x-2 py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >
+              <UserIcon className="h-5 w-5" />
+              <span>Profile</span>
             </a>
           </li>
         </ul>
