@@ -77,17 +77,7 @@ const ProfileBar = ({
                   Edit Profile
                 </button>
               ) : (
-                // <button
-                //   onClick={() =>
-                //     mutate({
-                //       followingId: userEmail,
-                //       followerId: yourId,
-                //     })
-                //   }
-                //   className="bg-secondary-color my-2 text-white  w-max rounded-md cursor-pointer flex mx-auto p-2"
-                // >
-                //   Follow
-                // </button>
+               
                 <div></div>
               )}
               <button
